@@ -20,7 +20,7 @@ const exclude           = /node_modules/;
 const config = {
 
   // The base directory for resolving `entry` (must be absolute path)
-  context: appPath,
+  context: appPath.replace(/\\/g, '/'),
 
   entry: {
     app: [
@@ -31,7 +31,7 @@ const config = {
 
   output: {
     // The bundling output directory (must be absolute path)
-    path: distPath,
+    path: distPath.replace(/\\/g, '/'),
     // Set proper base URL for serving resources
     publicPath: '',
     // The output filename of the entry chunk, relative to `path`
@@ -48,7 +48,7 @@ const config = {
     }),
 
     // Do not output to dist if there are errors
-    new webpack.NoEmitOnErrorsPlugin(),
+   // new webpack.NoEmitOnErrorsPlugin(),
 
     // Define global variables that will be available in any chunk
     new webpack.DefinePlugin({
@@ -128,5 +128,7 @@ if (appEnv === 'production') {
     new CleanPlugin(['dist'])
   );
 }
+
+console.log(config);
 
 module.exports = config;

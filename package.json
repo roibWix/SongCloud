@@ -9,9 +9,13 @@
   },
   "license": "ISC",
   "dependencies": {
+    "font-awesome": "4.7.0",
     "normalize.css": "6.0.0",
     "react": "15.4.2",
-    "react-dom": "15.4.2"
+    "react-dom": "15.4.2",
+    "react-router-dom": "4.0.0",
+    "roboto-fontface": "0.7.0",
+    "surface": "github:mildrenben/surface"
   },
   "devDependencies": {
     "autoprefixer": "6.7.7",

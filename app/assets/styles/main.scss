@@ -1,3 +1,9 @@
+/**
+Global design
+ */
+html {
+  font-family: 'Roboto','Roboto-Light',  sans-serif, FontAwesome;
+}
 
 html,
 body {
@@ -5,6 +11,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 
 }
 
@@ -13,33 +20,269 @@ body {
   padding-bottom: 60px;
 }
 
+body > div {
+  width: 100%;
+}
+
+
+/**
+--------------------------------Top Nav Bar design-----------------------
+ */
+
 .topnav {
   position: fixed;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
-  background-color: aqua;
+  background-color: #2196F3;
   display: block;
 }
 
+.topnavul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+  line-height: 60px;
+  padding-left: 0.7%;
+
+}
+.topnavli {
+  height: 60px;
+}
+.myselected {
+  background-color: #1E88E5;
+  height: 60px;
+}
+
+/**
+Logo Design
+ */
+
+.logos {
+  color: #FFFFFF;
+}
+
+.logos > i {
+  color: #FFFFFF;
+  font-size: 1.88rem;
+  text-decoration: none;
+}
+.logos > span {
+  font-size: 20px;
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+.topnavli *,
+.topnavli > a {
+  text-decoration: none;
+  list-style: none;
+
+}
+.topnavli > a {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.topnavlink:link,
+.topnavlink:visited,
+.topnavlink:hover,
+.topnavlink:active,
+.topnavlink:focus,
+.topnavlink {
+  color: #FFFFFF;
+  text-decoration: none;
+  height: 100%;
+  display: block;
+
+}
+/**
+Search Design
+ */
+
+.searchintopnav {
+  margin-left: auto;
+  position: relative;
+}
+
+.search-sign {
+  font-family: FontAwesome;
+  font-size: 17px;
+  color: #FFFFFF;
+  position: absolute;
+  left: 5px;
+  bottom: 0;
+}
+.search {
+  font-family: 'Roboto-Light';
+  padding-left: 20px;
+  background-color: #1E88E5;
+  color: white;
+  width: 330px;
+  height: 25px;
+  border: 1px solid #D8D8D8;
+  border-radius: 25px;
+}
+.search::placeholder {
+  color: #FFFFFF;
+}
+
+.logout {
+  font-family: Roboto-Light;
+  border: none;
+  font-size: 15px;
+  color: #FFFFFF;
+  background-color: #2196F3;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+
+
+/**
+Categories Design
+ */
+.categoriescontainer {
+  list-style: none;
+  outline: 2px blue solid;
+
+}
+
+.categoriescontainer > li {
+  display: inline;
+}
+
+/**
+Sign up and in Designs
+ */
+
+.sign-container {
+  margin: 0 auto;
+  padding-top: 30px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-logo {
+  font-size: 6.25rem;
+  text-align: center;
+  color: #2196F3;
+}
+
+.sign-title {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #2196F3;
+  margin-top: 10px;
+}
+
+.sign-username {
+  color: #2196F3;
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+}
+
+.sign-username-input {
+  border: 0;
+  border-bottom: 2px solid;
+  border-bottom-color: #2196F3;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.sign-action-title {
+  font-size: 1.38rem;
+  margin-top: 10px;
+  margin-bottom: 10%;
+}
+
+.sign-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+
+}
+
+.sign-password {
+  color: #2196F3;
+  font-size: 0.75rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+
+.sign-form > p,
+.sign-form > input {
+  width: 100%;
+  outline: none;
+}
+
+.sign-submit-btn {
+  background-color: #2196F3;
+  color: white;
+  text-decoration: none;
+  border: none;
+  margin-top: 20px;
+  width: 87px;
+  height: 30px;
+  align-self: center;
+  text-transform: uppercase;
+}
+
+.sign-question {
+  display: inline;
+}
+
+.sign-link {
+  margin-left: 20px;
+}
+
+.sign-link:link,
+.sign-link:visited,
+.sign-link:hover,
+.sign-link:active,
+.sign-link:focus,
+.sign-link {
+  color: #2196F3;
+  text-decoration: none;
+}
+
+.song-card {
+  text-decoration: none;
+  list-style: none;
+  outline: 1px blue solid;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .Player {
   position: fixed;
-  bottom:0;
+  bottom: 0;
   left: 0;
   height: 60px;
   width: 100%;
-  background-color: coral;
-}
-.searchintopnav {
-  float: right;
+  background-color: fuchsia;
 }
 
-.categoriescontainer {
-  list-style: none;
-  display: inline;
-  outline: 20px blue solid;
-}
+
+
 
 
 
