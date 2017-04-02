@@ -18,18 +18,26 @@ export default function Root() {
     <BrowserRouter>
       <div>
         <Topbar />
-        <main>
+        <main className="container">
           <Switch>
             <Route exact path="/" component={() => {
-              return <Redirect to="/Explore"/>}}/>
-            <Route exact path="/Explore" component={ Explore }/>
+              return <Redirect to="/Explore/trance"/>}}/>
+
+            <Route exact path="/Explore" component={() => {
+              return <Redirect to="/Explore/trance"/>}}/>
+
+
+            <Route path="/Explore/:genre"  component={ Explore }/>
+
+
+
             <Route path="/Playlists" component={ Playlists }/>
             <Route path="/signin" component={ Signin }/>
             <Route path="/signup" component={ Signup }/>
 
           </Switch>
         </main>
-        <Player/>
+        {/*<Player/>*/}
       </div>
     </BrowserRouter>
   );
