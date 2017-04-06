@@ -66,7 +66,6 @@ body > div {
 Logo Design
  */
 
-
 .logos {
   color: #FFFFFF;
 }
@@ -124,8 +123,11 @@ Search Design
   font-size: 17px;
   color: #FFFFFF;
   position: absolute;
-  left: 5px;
-  bottom: 0;
+  left: -2px;
+  bottom: 35%;
+  border: none;
+  background-color: transparent;
+
 }
 
 .search {
@@ -153,6 +155,7 @@ Search Design
   background-color: #2196F3;
   margin-right: 10px;
   margin-left: 10px;
+  text-decoration: none
 }
 
 /**
@@ -169,8 +172,9 @@ Categories Design
   justify-content: space-between;
 
 }
+
 .pagenumberbtn {
-  width:87px;
+  width: 87px;
   height: 30px;
   background: #2196F3;
   margin: 5px;
@@ -181,15 +185,14 @@ Categories Design
   font-size: 13px;
   color: #FFFFFF;
 }
+
 .current-page-number {
   font-family: Roboto-Regular;
   font-size: 14px;
   color: #000000;
-line-height: 40px;
+  line-height: 40px;
 
 }
-
-
 
 /**
 Sign up and in Designs
@@ -286,6 +289,7 @@ Sign up and in Designs
   color: #2196F3;
   text-decoration: none;
 }
+
 .container {
   position: relative;
 }
@@ -302,20 +306,21 @@ Sign up and in Designs
   background: #DDE4E6;
   position: fixed;
   top: 64px;
-  left:0;
+  left: 0;
   width: 100%;
   z-index: 50;
 }
-.categories-container li:not(:first-child)  {
+
+.categories-container li:not(:first-child) {
   margin: auto;
 }
+
 .category a:link,
 .category a:visited,
-
 .category a:active,
 .category a:focus,
 .category a:link {
-text-decoration: none;
+  text-decoration: none;
   font-family: Roboto-Light;
   font-size: 15px;
   color: #000000;
@@ -329,6 +334,7 @@ text-decoration: none;
   box-shadow: inset 0 -2px 0 #5CB3FF;
   transition: all .2s ease-in-out;
 }
+
 .my-selected-category {
   //height: 64px;
   //background-color: #bac1c3;
@@ -341,11 +347,6 @@ text-decoration: none;
 
 }
 
-
-
-
-
-
 .genres-title {
   font-weight: bold;
   font-family: Roboto-Regular;
@@ -353,6 +354,7 @@ text-decoration: none;
   color: #000000;
   justify-content: flex-start;
 }
+
 .explore-title-genres {
   font-family: Roboto-Medium;
   margin-left: 15px;
@@ -394,15 +396,17 @@ text-decoration: none;
   width: 50px;
   height: 50px;
   background-repeat: no-repeat;
-background-position: center center;
+  background-position: center center;
   background-size: cover;
 
 }
+
 .playlist-container {
   display: flex;
   height: 1000px;
 
 }
+
 .playlist-bar {
   //outline: 1px blue solid;
   width: 19.5%;
@@ -412,11 +416,13 @@ background-position: center center;
   box-shadow: inset -1px 0 0 0 #D8D8D8;
 
 }
+
 .playlists {
   width: 80.5%;
   //outline: 1px solid pink;
   display: block;
 }
+
 .add-list-btn {
   font-family: Roboto-Medium;
   font-size: 13px;
@@ -424,6 +430,7 @@ background-position: center center;
   width: 180px;
   height: 30px;
 }
+
 .playlist-bar-separator {
   width: 180px;
   height: 1px;
@@ -452,9 +459,10 @@ background-position: center center;
   position: absolute;
   right: 10px;
   bottom: 10px;
-  }
+}
+
 .fa-heart {
-  color:#2196F3;
+  color: #2196F3;
 }
 
 .heart-font:hover {
@@ -483,7 +491,6 @@ background-position: center center;
   flex-wrap: wrap;
 }
 
-
 .Player {
   position: fixed;
   bottom: 0;
@@ -495,9 +502,11 @@ background-position: center center;
   justify-content: space-around;
   align-items: center;
 }
+
 .playerElm {
   width: 310px;
 }
+
 .play-on-card {
   width: 50%;
   height: 50%;
@@ -508,30 +517,31 @@ background-position: center center;
   //transition: opacity;
   opacity: 0;
   //transition-duration: 2s;
-//transform: opacity;
+  //transform: opacity;
 }
+
 .play-on-card:hover {
   transition: all .1s ease-in-out;
   //transform: opacity();
   opacity: 1;
 }
 
-
-
+.show {
+  display: flex !important;
+}
 
 .song-drop-down {
   position: absolute;
-  top:93%;
-  right:10px;
+  top: 93%;
+  right: 10px;
   width: 130px;
   height: 110px;
   z-index: 30;
-  display: flex;
   flex-direction: column;
   display: none;
 
   background: #FFFFFF;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 }
 
 .song-drop-down-add-to-title {
@@ -539,21 +549,20 @@ background-position: center center;
   font-size: 11px;
   color: #4A4A4A;
 }
+
 .song-drop-down-add-to-btn {
   font-family: Roboto-Regular;
   font-size: 9px;
   color: #2196F3;
 }
+
 .song-drop-down-label {
 
-
-
-font-family: Roboto-Regular;
-font-size: 9px;
-color: #4A4A4A;
-line-height: 12px;
+  font-family: Roboto-Regular;
+  font-size: 9px;
+  color: #4A4A4A;
+  line-height: 12px;
 }
-
 
 .innerplay {
   font-family: FontAwesome;
@@ -563,8 +572,91 @@ line-height: 12px;
   height: 100%;
 }
 
+.playlist-bar-lists {
+  text-decoration: none;
+  list-style-type: none;
+  padding-left: 20px;
+  line-height: 2;
+}
 
+.playlist-title {
+  background: #FFFFFF;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 2px 0 rgba(0, 0, 0, 0.12);
 
+  font-family: Roboto-Light;
+  font-size: 22px;
+  color: #000000;
+  height: 4rem;
+  width: 91.92%;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
 
+.playlist {
+  position: relative;
+}
 
+.delete-btn {
+  position: absolute;
+  left: 87%;
+  top: 10%;
+  background-color: #FFFFFF;
+  border: 0;
+  display: none;
+  width: 51px;
+  height: 18px;
+  //outline: 1px blue solid;
+  font-family: Roboto-Medium;
+  font-size: 13px;
+  color: #F44336;
+  z-index: 20;
+  font-weight: bold;
+}
+
+.for-hover:hover .delete-btn {
+  display: inline-block;
+}
+
+.delete-btn:hover {
+  background-color: black;
+}
+
+.playlist-bar-top {
+  justify-content: center;
+  display: flex;
+}
+
+.playlist-bar-list {
+
+  font-family: Roboto-Light;
+  font-size: 15px;
+  color: #000000;
+
+}
+
+.title-mode input {
+  display: none;
+}
+
+.title-mode h2 {
+  display: flex;
+}
+
+.input-mode h2 {
+  display: none;
+}
+
+.input input {
+  display: block;
+
+}
+
+.submit {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
 

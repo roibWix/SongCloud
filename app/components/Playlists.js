@@ -1,20 +1,40 @@
 import React from 'react'
+import SongsCreator from './SongsCreator';
+import PlayListsCom from './PlayListsCom';
+
 export default class Playlists extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      isTitleMode: true
+    }
   }
 
   componentDidMount() {
-    // this.listBuilder()
+console.info('fucker',this.lastList);
+
   }
 
-  listBuilder() {
-    // console.info(this.props.data);
+  listBuilderInBar() {
+    return this.props.playLists.map((list, i) => {
+      return <li className="playlist-bar-list" key={i}  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
+    })
+  }
 
 
-  return  this.props.data.map((list,i) => {
-      console.info(list);
-      return <li key={i}>{list.listTitle}</li>;
+
+  listBuilderInPlaylists() {
+
+
+    return this.props.playLists.map((list, i) => {
+      return (
+
+        <PlayListsCom  key={i} i={i} list={list} updateList={this.props.updateList} {...this.props}/>
+
+      )
+
+
     })
   }
 
@@ -22,24 +42,25 @@ export default class Playlists extends React.Component {
   render() {
 
     return (
-
       <div className="playlist-container">
         <div className="playlist-bar">
-
           <div className="playlist-bar-top">
-            <button className="pagenumberbtn add-list-btn">Add new playlist</button>
+            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewList()}>Add new playlist
+            </button>
           </div>
           <div className="playlist-bar-separator"/>
-
-
           <div className="playlist-bar-bottom">
-            <ul>
-              {this.listBuilder()}
+            <ul className="playlist-bar-lists" >
+              {this.listBuilderInBar()}
             </ul>
           </div>
         </div>
-        <div className="playlists">favorite songs</div>
+        <div className="playlists" >
+          {this.listBuilderInPlaylists()}
+        </div>
       </div>
     )
   }
+
+
 }

@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import React from 'react';
 
 export default function Topbar(props) {
@@ -20,9 +20,11 @@ export default function Topbar(props) {
                                               to="/Playlists">Playlists</NavLink></li>
 
           <div className="searchintopnav">
-            <span className="search-sign"></span>
+            <form>
+            <button type="submit" value="submit" className="search-sign"></button>
             <input className="search" type="search" placeholder="SEARCH"/>
-            <button className="logout">Log out</button>
+            <Link  to="/Signin" className="logout topnavli">Log out</Link>
+            </form>
           </div>
         </ul>
       </nav>

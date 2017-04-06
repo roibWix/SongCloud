@@ -22,7 +22,7 @@ export default class Explore extends React.Component {
 
 
   componentDidMount() {
-    // console.info('explore',this);
+// console.info(this);
     this.getSongsXhr()
   }
 
@@ -43,8 +43,8 @@ export default class Explore extends React.Component {
 
   SongsHandler() {
     return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongsCreator
-      data={this.state.songs[i]} updateCurrentTrack={this.props.updateCurrentTrack}/>
-    </li>)
+      data={this.state.songs[i]} updateCurrentTrack={this.props.updateCurrentTrack}  addNewList={this.props.addNewList}  from={'Explore'}playLists={this.props.playLists}/>
+     </li>)
   }
 
   ListOfSongsCreator() {
@@ -85,12 +85,39 @@ export default class Explore extends React.Component {
       <div>
         <ul className="categories-container">
           <li className="genres-title">Genres:</li>
-          <li className="category"><NavLink activeClassName="my-selected-category" to="/Explore/trance">Trance</NavLink>
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/allmusic">all-music</NavLink>
           </li>
-          <li className="category"><NavLink activeClassName="my-selected-category"
-                                            to="/Explore/dubstep">Dubstep</NavLink></li>
-          <li className="category"><NavLink activeClassName="my-selected-category" to="/Explore/house">House</NavLink>
+
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/hiphoprap">hip hop rap</NavLink>
           </li>
+
+
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/house">house</NavLink>
+          </li>
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/rock">rock</NavLink>
+          </li>
+
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/pop">pop</NavLink>
+          </li>
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/reggaeton">reggaeton</NavLink>
+          </li>
+
+
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/trance">trance</NavLink>
+          </li>
+
+
+          <li className="category">
+            <NavLink activeClassName="my-selected-category" to="/Explore/dubstep">dubstep</NavLink>
+          </li>
+
         </ul>
 
 
