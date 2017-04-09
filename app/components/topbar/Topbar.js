@@ -1,10 +1,11 @@
+import './topbar.scss'
 import {NavLink, Link} from 'react-router-dom';
 import React from 'react';
 
 export default function Topbar(props) {
   return (
 
-    <header>
+    <header className="top-bar">
       <nav className="topnav">
         <ul className="topnavul">
           <li className={"topnavli mylogo"}>

@@ -4,10 +4,10 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import Explore from './Explore'
-import Player from './Player'
-import Playlists from './Playlists'
-import Topbar from './Topbar'
+import Explore from '../explore/Explore'
+import Player from '../player/Player'
+import Playlists from '../playlists/Playlists'
+import Topbar from '../topbar/Topbar'
 import React from 'react';
 import uuid from 'uuid';
 
@@ -92,7 +92,7 @@ export default class Root extends React.Component {
 console.info(copyOfPlaylists);
     let newCopy = copyOfPlaylists.splice(listIndex,1);
 console.info(newCopy);
-    // this.setState({playlists: copyOfPlaylists});
+    // this.setState({playlists-main: copyOfPlaylists});
   }
 
 
@@ -101,7 +101,7 @@ console.info(newCopy);
     return (
       <div>
         <Topbar/>
-        <main className="container">
+        <main>
           <switch>
             <Route exact path="/" component={() => {
               return <Redirect to="/explore"/>

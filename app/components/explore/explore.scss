@@ -1,0 +1,95 @@
+@import 'assets/styles/colors';
+
+.explore {
+
+  .categories-container {
+    height: 40px;
+    margin: 0;
+    line-height: 40px;
+    padding: 0 0 0 10px;
+    display: flex;
+    justify-content: flex-start;
+    list-style: none;
+    background: #DDE4E6;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+
+    li:not(:first-child) {
+      margin: auto;
+    }
+
+    .genres-title {
+      font-weight: bold;
+      font-family: Roboto-Regular;
+      font-size: 15px;
+      color: #000000;
+      justify-content: flex-start;
+    }
+
+    .category {
+      a {
+        text-decoration: none;
+        font-family: Roboto-Light;
+        font-size: 15px;
+        color: #000000;
+        padding-left: 10px;
+        padding-right: 10px;
+        &:hover {
+          color: #2d2d11;
+          box-shadow: inset 0 -2px 0 #5CB3FF;
+          transition: all .2s ease-in-out;
+        }
+      }
+      .my-selected-category {
+        padding-left: 10px;
+        padding-right: 10px;
+        color: #2d2d11;
+        box-shadow: inset 0 -2px 0 #5CB3FF;
+      }
+    }
+  }
+  .explore-title-genres {
+    font-family: Roboto-Medium;
+    margin-left: 15px;
+    font-size: 23px;
+    color: #000000;
+    padding-top: 40px;
+  }
+  .songs-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .pagenumber {
+    margin: 0 auto;
+    width: 400px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    .pagenumberbtn {
+      width: 87px;
+      height: 30px;
+      background: #2196F3;
+      margin: 5px;
+      border-radius: 2px;
+      border: none;
+      font-family: Roboto-Medium;
+      font-size: 13px;
+      color: #FFFFFF;
+    }
+    .current-page-number {
+      font-family: Roboto-Regular;
+      font-size: 14px;
+      color: #000000;
+      line-height: 40px;
+    }
+  }
+}
+

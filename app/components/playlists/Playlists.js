@@ -1,6 +1,7 @@
+import './playlists.scss';
 import React from 'react'
-import SongsCreator from './SongsCreator';
-import PlayListsCom from './PlayListsCom';
+import SongsCreator from '../songcreator/SongCreator';
+import PlayList from '../playlist/PlayList';
 
 export default class Playlists extends React.Component {
   constructor() {
@@ -22,6 +23,12 @@ console.info('fucker',this.lastList);
     })
   }
 
+  componentDidUpdate() {
+
+      // this.inputState.focus()
+
+  }
+
 
 
   listBuilderInPlaylists() {
@@ -30,7 +37,7 @@ console.info('fucker',this.lastList);
     return this.props.playLists.map((list, i) => {
       return (
 
-        <PlayListsCom  key={i} i={i} list={list} updateList={this.props.updateList} {...this.props}/>
+        <PlayList playLists={this.props.playLists} key={i} i={i} list={list} updateList={this.props.updateList} {...this.props}/>
 
       )
 
@@ -42,7 +49,7 @@ console.info('fucker',this.lastList);
   render() {
 
     return (
-      <div className="playlist-container">
+      <div className="playlists">
         <div className="playlist-bar">
           <div className="playlist-bar-top">
             <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewList()}>Add new playlist
@@ -55,7 +62,7 @@ console.info('fucker',this.lastList);
             </ul>
           </div>
         </div>
-        <div className="playlists" >
+        <div className="playlists-main" >
           {this.listBuilderInPlaylists()}
         </div>
       </div>

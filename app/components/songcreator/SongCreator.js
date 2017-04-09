@@ -1,3 +1,9 @@
+
+import './songcreator.scss';
+
+
+
+
 import React from 'react'
 import {Link} from 'react-router-dom'
 
@@ -58,7 +64,7 @@ export default class SongsCreator extends React.Component {
 
 
     return (
-      <div ref={(song) => this.song = song}>
+      <div className="songs-creator" ref={(song) => this.song = song}>
         <div className="img-song" style={{
           backgroundImage: `url(${songImage})`
         }} onClick={() => this.updateSongInPlayer()}/>

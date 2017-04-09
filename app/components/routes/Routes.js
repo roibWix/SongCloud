@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
-import Signup from './Signup';
-import Signin from './Signin';
-import Root from './Root';
+import Signup from '../auth/Signup';
+import Signin from '../auth/Signin';
+import Root from '../root/Root';
 
 export default function Routes() {
   return (

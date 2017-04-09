@@ -1,8 +1,10 @@
+import './explore.scss';
+
 import React from 'react';
-import SongsCreator from './SongsCreator'
-import Player from './Player'
+import SongCreator from '../songcreator/SongCreator'
 import {NavLink} from 'react-router-dom';
-import {setSong} from './Root'
+import {setSong} from '../root/Root'
+
 
 let xhr;
 export default class Explore extends React.Component {
@@ -22,9 +24,22 @@ export default class Explore extends React.Component {
 
 
   componentDidMount() {
-// console.info(this);
+
     this.getSongsXhr()
   }
+
+
+/*  componentWillReceiveProps() {
+    const prevGenre = prevProps.match.params.genre;
+    const targetGenre = this.props.match.params.genre;
+
+    if (prevGenre !== targetGenre) {
+      this.setState({
+        offset: 0
+      }, () => this.getSongsXhr())
+    }
+
+  }*/
 
   getSongsXhr() {
     const genre = this.props.match.params.genre;
@@ -42,9 +57,10 @@ export default class Explore extends React.Component {
   }
 
   SongsHandler() {
-    return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongsCreator
-      data={this.state.songs[i]} updateCurrentTrack={this.props.updateCurrentTrack}  addNewList={this.props.addNewList}  from={'Explore'}playLists={this.props.playLists}/>
-     </li>)
+    return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongCreator
+      data={this.state.songs[i]} updateCurrentTrack={this.props.updateCurrentTrack} addNewList={this.props.addNewList}
+      from={'Explore'} playLists={this.props.playLists}/>
+    </li>)
   }
 
   ListOfSongsCreator() {
@@ -56,15 +72,27 @@ export default class Explore extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const prevGenre = prevProps.match.params.genre;
     const targetGenre = this.props.match.params.genre;
-    if (prevGenre !== targetGenre || prevState.offset !== this.state.offset) {
-      this.getSongsXhr();
+
+
+    if (prevGenre !== targetGenre) {
+      this.setState({
+        offset: 0
+      }, () => this.getSongsXhr())
     }
+
+    if (prevState.offset !== this.state.offset) {
+      this.getSongsXhr()
+    }
+
+
   }
+
   nextPage() {
     this.setState({
       offset: this.state.offset + this.state.limit
     })
   }
+
   prevPage() {
     this.setState({
       offset: this.state.offset - this.state.limit
@@ -82,7 +110,7 @@ export default class Explore extends React.Component {
     }
 
     return (
-      <div>
+      <div className="explore">
         <ul className="categories-container">
           <li className="genres-title">Genres:</li>
           <li className="category">
@@ -123,7 +151,6 @@ export default class Explore extends React.Component {
 
         <h2 className="explore-title-genres">Genres</h2>
         {this.ListOfSongsCreator()}
-
         <div className="pagenumber">
 
 
@@ -136,7 +163,6 @@ export default class Explore extends React.Component {
         </div>
 
       </div>
-
 
     )
   }
