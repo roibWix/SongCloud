@@ -1,7 +1,4 @@
-
 import './songcreator.scss';
-
-
 
 
 import React from 'react'
@@ -13,16 +10,68 @@ export default class SongsCreator extends React.Component {
     this.state = {
       class: "fa fa-heart-o heart-font",
       isDropDownOpen: false,
-      mode: ''
+      mode: '',
+      checker: false
     };
 
 
-  }
 
+  };
 
 
   componentDidMount() {
+
+
+
+    this.props.playLists.map((list, i) => {
+
+      list.songs.map((song) => {
+        if (song.id === this.props.data.id) {
+          return  this.setState({
+
+            class: "fa fa-heart heart-font"
+          })
+        }
+      });
+    })
+    // checker: true,
+    // this.heartHandler()
   }
+
+
+  heartHandler() {
+
+
+
+      let playLists = [...this.props.playLists];
+
+
+
+
+/*    if (this.props.from === 'Playlists') {
+      console.info(this.props.list);
+
+
+      return this.props.list.songs.map
+
+
+      return this.props.playLists.map((list, i) => {
+        return list.songs.map((song) => {
+          if (song.id === this.props.data.id) {
+            this.setState({
+              checker: true,
+              class: "fa fa-heart heart-font"
+            })
+          }
+        });
+      })
+
+
+    }*/
+
+
+  }
+
 
   updateSongInPlayer() {
     return this.props.updateCurrentTrack(this.props.data);
@@ -34,18 +83,43 @@ export default class SongsCreator extends React.Component {
     this.setState({isDropDownOpen: !this.state.isDropDownOpen})
   }
 
+
+
   DropDownBuilder() {
+    // value of checkbox
+    let checked = false;
+
+
+    // dropdown builder
     return this.props.playLists.map((list, i) => {
+      // checked value reset
+      checked = false;
+
+      // iterate songs for each list in order to define if each song exciste in list
+      list.songs.map((song) => {
+        if (song.id === this.props.data.id) {
+          checked = true
+        }
+      });
+
+
       return <label key={i} className="song-drop-down-label">
-        <input type="checkbox"/>
+        <input type="checkbox" checked={ checked }/>
         {list.listTitle}</label>
     })
+
+
+  }
+
+  componentDidUpdate() {
 
   }
 
   CreateAddListElm() {
     if (this.props.from === 'Explore') {
-      return (<Link to="/playlists" ref={(elm) => {this.Elm = elm}} onClick={() => this.props.addNewList(this.props.data,this.Elm)}
+      return (<Link to="/playlists" ref={(elm) => {
+        this.Elm = elm
+      }} onClick={() => this.props.addNewList(this.props.data, this.Elm)}
                     className="song-drop-down-add-to-btn">Create playlist +</Link>)
     }
 
@@ -72,7 +146,7 @@ export default class SongsCreator extends React.Component {
         <span className="clock"></span>
         <span className="song-duration">{songDuration}</span>
 
-        <i className={this.state.class} ref={(element) => this.Elm = element} onClick={() => this.heartClicker()}
+        <i className={this.state.class} ref={(element) => this.Heart = element} onClick={() => this.heartClicker()}
            aria-hidden="true"
         />
 

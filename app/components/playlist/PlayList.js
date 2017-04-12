@@ -6,10 +6,8 @@ export default class PlayListsCom extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      isTitleMode: true,
-      mode: 'input',
-      value: '',
-      isThisTheFirstTime: true
+      mode: 'title',
+      value: ''
 
     };
     this.list = props.list;
@@ -20,13 +18,23 @@ export default class PlayListsCom extends React.Component {
   }
 
   componentDidMount() {
+
+    if (this.props.addedNewList) {
+      this.setState({mode:'input'});
+    }
     this.setState({value: this.list.listTitle});
   }
 
   componentDidUpdate(prevProps, prevState) {
       if (this.input) {
+
+        // this.input.scrollIntoView({block: "start", behavior: "smooth"})
         this.input.focus();
       }
+      if (this.list.listTitle === this.props.scrollTo) {
+        this.playList.scrollIntoView({block: "start", behavior: "smooth"})
+      }
+
   }
 
   handleChange(event) {
@@ -44,24 +52,19 @@ export default class PlayListsCom extends React.Component {
 
   }
 
-  temp() {
-
+  deleteListHandler() {
+    console.info('here', this.props);
     let title = this.list.listTitle;
     confirm(`Deleting ${title} playlist. Are you sure?`);
-    this.props.deleteList(this.props.i);
+    this.props.deleteList(this.i);
 
   }
 
-  tempp() {
-    if (this.state.isThisTheFirstTime === true) {
-      this.setState({isThisTheFirstTime: !this.state.isThisTheFirstTime});
-    }
-    this.setState({mode: 'input'});
-  }
+
 
   render() {
     return (
-      <ul className="playlist" ref={(evt) => this.lastList = evt}>
+      <ul ref={(evt) => this.playList = evt} className="playlist">
 
         <form onSubmit={this.handleSubmit}>
           <div className="for-hover">
@@ -71,7 +74,7 @@ export default class PlayListsCom extends React.Component {
 
 
             </label>}
-            <button className="delete-btn" type="button" onClick={() => this.temp()}>Delete</button>
+            <button className="delete-btn" type="button" onClick={() => this.deleteListHandler()}>Delete</button>
           </div>
           {(this.state.mode === 'input') &&
           <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
@@ -84,6 +87,7 @@ export default class PlayListsCom extends React.Component {
 
           return <li key={song.id} className="song-card"><SongsCreator
             from={'Playlists'}
+            list={this.props.list}
             data={song}
             updateCurrentTrack={this.props.updateCurrentTrack}
             playLists={this.props.playLists}/>
@@ -98,7 +102,7 @@ export default class PlayListsCom extends React.Component {
 {/* <h2 className={titleContainerClassName} key={this.i}
  onClick={(event) => this.handler(event)}>{this.list.listTitle}</h2>
  <input type="text" className={titleContainerClassName} value={this.list.listTitle} ref={(evt) => this.Elm = evt}
- onChange={this.temp}/>*/
+ onChange={this.deleteList}/>*/
 }
 {/*     <form onSubmit={this.handleSubmit.bind(this)}>
 
@@ -108,7 +112,7 @@ export default class PlayListsCom extends React.Component {
  name:</label>
  <input type="text" name="name" className={titleContainerClassName} value={this.state.listTitle}
  ref={(evt) => this.Elm = evt}
- onChange={this.temp}
+ onChange={this.deleteList}
  onBlur={ () => this.inputEditMode() }/>
 
  <input className="submit" type="submit" value="submit"/>

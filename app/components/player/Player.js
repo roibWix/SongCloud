@@ -1,5 +1,9 @@
 import './player.scss';
 import  React from "react";
+
+
+
+// console.info(store);
 export default function Player(props) {
 
 let songUrl = props.Track.data? props.Track.data.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da' : null;

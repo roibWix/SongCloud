@@ -16,6 +16,7 @@ export default class Root extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      addedNewList: false,
       currentTrack: {null},
       playlists: [{
         listid: 666,
@@ -70,10 +71,11 @@ export default class Root extends React.Component {
         artwork_url: "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
       }]
     };
+
+    this.setState({addedNewList: true}, () => this.setState({addedNewList: false}));
     if (song) {
       playlist.songs.pop();
       playlist.songs.push(song);
-      // this.Elm = element;
     }
     copyOfState.push(playlist);
     this.setState({playlists: copyOfState});
@@ -82,17 +84,16 @@ export default class Root extends React.Component {
   updateList(list, i, newTitleName) {
     let copyOfState = [...this.state.playlists];
     copyOfState[i].listTitle = newTitleName;
-
-
     this.setState({playlists: copyOfState});
+
   }
 
   deleteList(listIndex) {
     let copyOfPlaylists = [...this.state.playlists];
-console.info(copyOfPlaylists);
-    let newCopy = copyOfPlaylists.splice(listIndex,1);
-console.info(newCopy);
-    // this.setState({playlists-main: copyOfPlaylists});
+    console.info('copyofplaylists',copyOfPlaylists);
+    copyOfPlaylists.splice(listIndex, 1);
+    // console.info(newCopy);
+    this.setState({playlists: copyOfPlaylists});
   }
 
 
@@ -121,7 +122,8 @@ console.info(newCopy);
                                 addNewList={this.addNewList2state}
                                 {...props} updateList={this.updateList}
                                 playLists={this.state.playlists}
-                                deleteList={this.deleteList}/>
+                                deleteList={this.deleteList}
+                                addedNewList={this.state.addedNewList}/>
             }}/>
           </switch>
         </main>

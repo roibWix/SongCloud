@@ -8,27 +8,34 @@ export default class Playlists extends React.Component {
     super();
 
     this.state = {
-      isTitleMode: true
-    }
+      // isTitleMode: true
+      scrollTo: null
+    };
+    this.addNewListHandler = this.addNewListHandler.bind(this);
+    this.deleteList = this.deleteList.bind(this)
+
   }
 
   componentDidMount() {
-console.info('fucker',this.lastList);
+
 
   }
 
+  headerScroller(title) {
+this.setState({scrollTo: title});
+  }
+
+
   listBuilderInBar() {
     return this.props.playLists.map((list, i) => {
-      return <li className="playlist-bar-list" key={i}  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
+      return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list" key={i}
+                 ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
     })
   }
 
   componentDidUpdate() {
 
-      // this.inputState.focus()
-
   }
-
 
 
   listBuilderInPlaylists() {
@@ -37,12 +44,33 @@ console.info('fucker',this.lastList);
     return this.props.playLists.map((list, i) => {
       return (
 
-        <PlayList playLists={this.props.playLists} key={i} i={i} list={list} updateList={this.props.updateList} {...this.props}/>
+        <PlayList
+          scrollTo={this.state.scrollTo}
+          playLists={this.props.playLists}
+          addedNewList={this.props.addedNewList && this.props.playLists.length - 1}
+          key={i}
+          i={i}
+          list={list}
+          updateCurrentTrack={this.props.updateCurrentTrack}
+          updateList=
+            {this.props.updateList}
+          deleteList={this.deleteList}
 
+        />
       )
-
-
     })
+  }
+
+  addNewListHandler() {
+    this.props.addNewList()
+  }
+
+
+  deleteList(i) {
+    // let title = this.list.listTitle;
+    // confirm(`Deleting ${title} playlist. Are you sure?`);
+    this.props.deleteList(i);
+
   }
 
 
@@ -52,17 +80,17 @@ console.info('fucker',this.lastList);
       <div className="playlists">
         <div className="playlist-bar">
           <div className="playlist-bar-top">
-            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewList()}>Add new playlist
+            <button className="pagenumberbtn add-list-btn" onClick={() => this.addNewListHandler() }>Add new playlist
             </button>
           </div>
           <div className="playlist-bar-separator"/>
           <div className="playlist-bar-bottom">
-            <ul className="playlist-bar-lists" >
+            <ul className="playlist-bar-lists">
               {this.listBuilderInBar()}
             </ul>
           </div>
         </div>
-        <div className="playlists-main" >
+        <div className="playlists-main">
           {this.listBuilderInPlaylists()}
         </div>
       </div>
@@ -71,3 +99,5 @@ console.info('fucker',this.lastList);
 
 
 }
+//
+// {...this.props}
