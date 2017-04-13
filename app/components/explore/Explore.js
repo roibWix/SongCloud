@@ -24,7 +24,7 @@ export default class Explore extends React.Component {
 
 
   componentDidMount() {
-
+// console.info(this);
     this.getSongsXhr()
   }
 
@@ -58,7 +58,7 @@ export default class Explore extends React.Component {
 
   SongsHandler() {
     return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongCreator
-      data={this.state.songs[i]} updateCurrentTrack={this.props.updateCurrentTrack} addNewList={this.props.addNewList}
+      data={this.state.songs[i]}  addNewList={this.props.addNewList}
       from={'Explore'} playLists={this.props.playLists}/>
     </li>)
   }
@@ -168,3 +168,4 @@ export default class Explore extends React.Component {
   }
 
 }
+// updateCurrentTrack={this.props.updateCurrentTrack}

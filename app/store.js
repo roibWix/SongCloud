@@ -1,25 +1,18 @@
-import {createStore} from 'redux'
+import {createStore, combineReducers} from 'redux';
+import currentTrackReducer from './reducers/current-Track';
+import playListReducer from './reducers/playListsReducer';
+import addedNewPlayListReducer from './reducers/addedNewListReducer';
+
+// let store = createStore(reduce, initialState);
+
+const reducers = combineReducers({
+  currentTrackReducer,
+  playListReducer,
+  addedNewPlayListReducer
+
+});
 
 
-const initialState = {
-  currentTrack: {null},
-};
-
-
-let store = createStore(reduce, initialState);
-
-function reduce(currentState, action) {
-  if (action.type === 'updateCurrentTrack') {
-    return Object.assign({}, currentState, {currentTrack: action.data})
-  }
-
-  return currentState;
-
-
-  return {
-    type: 'ADD_TODO'
-
-  }
-}
+const store = createStore(reducers);
 
 export default store;

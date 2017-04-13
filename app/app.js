@@ -8,4 +8,21 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Routes from './components/routes/Routes'
 require('smoothscroll-polyfill').polyfill();
-ReactDOM.render(<Routes/>, document.querySelector('#root'));
+import store from './store';
+import Provider from "react-redux/src/components/Provider";
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Routes/>
+  </Provider>,
+  document.querySelector('#root'));
+/*
+function renderApp() {
+
+
+
+}
+renderApp();
+*/
+
+

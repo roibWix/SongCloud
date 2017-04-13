@@ -1,10 +1,11 @@
 import './songcreator.scss';
-
+// import store from '../../store'
 
 import React from 'react'
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 
-export default class SongsCreator extends React.Component {
+class SongsCreator extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -14,84 +15,69 @@ export default class SongsCreator extends React.Component {
       checker: false
     };
 
-
-
+    // this.CreateAddListElmHandler = this.CreateAddListElmHandler.bind(this)
   };
 
 
   componentDidMount() {
+    this.heartHandler()
 
 
+  }
 
-    this.props.playLists.map((list, i) => {
 
+  heartHandler() {
+    const storeDataPlayLists = this.props.playLists;
+
+    storeDataPlayLists.map((list, i) => {
       list.songs.map((song) => {
         if (song.id === this.props.data.id) {
-          return  this.setState({
-
+          return this.setState({
             class: "fa fa-heart heart-font"
           })
         }
       });
     })
-    // checker: true,
-    // this.heartHandler()
-  }
 
 
-  heartHandler() {
+    /*    if (this.props.from === 'Playlists') {
+     console.info(this.props.list);
 
 
-
-      let playLists = [...this.props.playLists];
-
+     return this.props.list.songs.map
 
 
-
-/*    if (this.props.from === 'Playlists') {
-      console.info(this.props.list);
-
-
-      return this.props.list.songs.map
-
-
-      return this.props.playLists.map((list, i) => {
-        return list.songs.map((song) => {
-          if (song.id === this.props.data.id) {
-            this.setState({
-              checker: true,
-              class: "fa fa-heart heart-font"
-            })
-          }
-        });
-      })
+     return this.props.playLists.map((list, i) => {
+     return list.songs.map((song) => {
+     if (song.id === this.props.data.id) {
+     this.setState({
+     checker: true,
+     class: "fa fa-heart heart-font"
+     })
+     }
+     });
+     })
 
 
-    }*/
+     }*/
 
 
   }
 
-
-  updateSongInPlayer() {
-    return this.props.updateCurrentTrack(this.props.data);
-  }
 
   heartClicker(elm) {
-
 
     this.setState({isDropDownOpen: !this.state.isDropDownOpen})
   }
 
-
-
   DropDownBuilder() {
+    // console.info(this.props);
+    // const storeDataPlayLists = store.getState().playListReducer;
+    const storeDataPlayLists = this.props.playLists;
     // value of checkbox
     let checked = false;
-
-
     // dropdown builder
-    return this.props.playLists.map((list, i) => {
+    return storeDataPlayLists.map((list, i) => {
       // checked value reset
       checked = false;
 
@@ -101,25 +87,23 @@ export default class SongsCreator extends React.Component {
           checked = true
         }
       });
-
-
       return <label key={i} className="song-drop-down-label">
         <input type="checkbox" checked={ checked }/>
         {list.listTitle}</label>
     })
-
-
   }
 
   componentDidUpdate() {
 
   }
 
+
   CreateAddListElm() {
     if (this.props.from === 'Explore') {
+
       return (<Link to="/playlists" ref={(elm) => {
         this.Elm = elm
-      }} onClick={() => this.props.addNewList(this.props.data, this.Elm)}
+      }} onClick={() => this.props.CreateAddListElmHandler(this.props.data) }
                     className="song-drop-down-add-to-btn">Create playlist +</Link>)
     }
 
@@ -141,7 +125,7 @@ export default class SongsCreator extends React.Component {
       <div className="songs-creator" ref={(song) => this.song = song}>
         <div className="img-song" style={{
           backgroundImage: `url(${songImage})`
-        }} onClick={() => this.updateSongInPlayer()}/>
+        }} onClick={() => this.props.updateSongInPlayer(this.props.data)}/>
         <span className="song-title">{songTitle + '...'}</span>
         <span className="clock"></span>
         <span className="song-duration">{songDuration}</span>
@@ -163,3 +147,29 @@ export default class SongsCreator extends React.Component {
 
 }
 
+// () => this.updateSongInPlayer()
+// onClick={() => this.props.addNewList(this.props.data, this.Elm)}
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateSongInPlayer(song) {
+      dispatch({
+        type: 'UPDATE_CURRENT_TRACK',
+        currentTrack: song
+      });
+    },
+    CreateAddListElmHandler(song) {
+      dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
+      dispatch({type: 'ADD-NEW-PLAYLIST', song: song, element: this.Elm})
+    }
+  }
+}
+
+function mapStateToProps(stateData) {
+  return {
+    playLists: stateData.playListReducer
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongsCreator)

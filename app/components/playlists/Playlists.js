@@ -1,17 +1,17 @@
 import './playlists.scss';
-import React from 'react'
-import SongsCreator from '../songcreator/SongCreator';
+import React from 'react';
+import {connect} from 'react-redux';
 import PlayList from '../playlist/PlayList';
 
-export default class Playlists extends React.Component {
+class Playlists extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      // isTitleMode: true
       scrollTo: null
     };
-    this.addNewListHandler = this.addNewListHandler.bind(this);
+
+    // this.addNewListHandler = this.addNewListHandler.bind(this);
     this.deleteList = this.deleteList.bind(this)
 
   }
@@ -22,15 +22,18 @@ export default class Playlists extends React.Component {
   }
 
   headerScroller(title) {
-this.setState({scrollTo: title});
+    this.setState({scrollTo: title});
   }
 
 
   listBuilderInBar() {
-    return this.props.playLists.map((list, i) => {
+     const playLists = this.props.playLists;
+
+    return playLists.map((list, i) => {
       return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list" key={i}
                  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
     })
+
   }
 
   componentDidUpdate() {
@@ -39,9 +42,9 @@ this.setState({scrollTo: title});
 
 
   listBuilderInPlaylists() {
+    const playLists = this.props.playLists;
 
-
-    return this.props.playLists.map((list, i) => {
+    return playLists.map((list, i) => {
       return (
 
         <PlayList
@@ -55,15 +58,12 @@ this.setState({scrollTo: title});
           updateList=
             {this.props.updateList}
           deleteList={this.deleteList}
-
         />
       )
     })
   }
 
-  addNewListHandler() {
-    this.props.addNewList()
-  }
+
 
 
   deleteList(i) {
@@ -80,7 +80,7 @@ this.setState({scrollTo: title});
       <div className="playlists">
         <div className="playlist-bar">
           <div className="playlist-bar-top">
-            <button className="pagenumberbtn add-list-btn" onClick={() => this.addNewListHandler() }>Add new playlist
+            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewListHandler() }>Add new playlist
             </button>
           </div>
           <div className="playlist-bar-separator"/>
@@ -99,5 +99,23 @@ this.setState({scrollTo: title});
 
 
 }
-//
-// {...this.props}
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addNewListHandler() {
+      dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
+      dispatch({
+        type: 'ADD-NEW-PLAYLIST',
+      });
+    }
+  }
+}
+
+function mapStateToProps(stateData) {
+  return {
+    playLists: stateData.playListReducer
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlists)

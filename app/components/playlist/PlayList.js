@@ -1,8 +1,11 @@
 import './playlist.scss'
 import React from 'react'
 import SongsCreator from '../songcreator/SongCreator'
+import store from '../../store';
+import {connect} from 'react-redux';
 
-export default class PlayListsCom extends React.Component {
+
+class PlayListsCom extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -18,22 +21,25 @@ export default class PlayListsCom extends React.Component {
   }
 
   componentDidMount() {
+    console.info(this.props);
+    const storeDataAddedNewPlayList = this.props.addedNewList;
 
-    if (this.props.addedNewList) {
-      this.setState({mode:'input'});
+    if (storeDataAddedNewPlayList === true) {
+      this.setState({mode: 'input'});
     }
     this.setState({value: this.list.listTitle});
   }
 
   componentDidUpdate(prevProps, prevState) {
-      if (this.input) {
+    if (this.input) {
 
-        // this.input.scrollIntoView({block: "start", behavior: "smooth"})
-        this.input.focus();
-      }
-      if (this.list.listTitle === this.props.scrollTo) {
-        this.playList.scrollIntoView({block: "start", behavior: "smooth"})
-      }
+      this.input.focus();
+      // store.dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
+
+    }
+    /* if (this.list.listTitle === this.props.scrollTo) {
+     this.playList.scrollIntoView({block: "start", behavior: "smooth"})
+     }*/
 
   }
 
@@ -41,11 +47,6 @@ export default class PlayListsCom extends React.Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    this.props.updateList(this.list, this.i, this.state.value);
-    this.setState({mode: 'title'});
-    event.preventDefault();
-  }
 
   toggleHandler() {
     this.setState({mode: 'input'});
@@ -60,11 +61,18 @@ export default class PlayListsCom extends React.Component {
 
   }
 
+  handleSubmit(event) {
+    this.props.SubmitHandlerToStore(this.i, this.state.value);
 
+
+    this.setState({mode: 'title'});
+    event.preventDefault();
+  }
 
   render() {
     return (
       <ul ref={(evt) => this.playList = evt} className="playlist">
+
 
         <form onSubmit={this.handleSubmit}>
           <div className="for-hover">
@@ -78,7 +86,7 @@ export default class PlayListsCom extends React.Component {
           </div>
           {(this.state.mode === 'input') &&
           <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
-            ref={(evt) => this.input = evt}  onBlur={this.handleSubmit}/>}
+                 ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
 
         </form>
 
@@ -120,3 +128,23 @@ export default class PlayListsCom extends React.Component {
  </form>*/
 }
 // (evt) => this.Label = evt
+
+function mapDispatchToProps(dispatch) {
+  return {
+
+    SubmitHandlerToStore(index, newTitleName) {
+      dispatch({type: 'UPDATE-LIST', index: index, newTitleName: newTitleName});
+      dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
+    }
+  }
+}
+
+
+function mapStateToProps(stateData) {
+  return {
+    playLists: stateData.playListReducer
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlayListsCom)
