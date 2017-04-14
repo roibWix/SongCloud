@@ -58,8 +58,8 @@ export default class Explore extends React.Component {
 
   SongsHandler() {
     return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongCreator
-      data={this.state.songs[i]}  addNewList={this.props.addNewList}
-      from={'Explore'} playLists={this.props.playLists}/>
+      data={this.state.songs[i]}
+      from={'Explore'} />
     </li>)
   }
 

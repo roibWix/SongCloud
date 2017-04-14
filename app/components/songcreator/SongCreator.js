@@ -16,6 +16,7 @@ class SongsCreator extends React.Component {
     };
 
     // this.CreateAddListElmHandler = this.CreateAddListElmHandler.bind(this)
+    this.checkHandler = this.checkHandler.bind(this)
   };
 
 
@@ -67,20 +68,32 @@ class SongsCreator extends React.Component {
 
   heartClicker(elm) {
 
-    this.setState({isDropDownOpen: !this.state.isDropDownOpen})
+    this.setState({isDropDownOpen: !this.state.isDropDownOpen});
+
+
   }
 
+
+  checkHandler(event) {
+    // console.info(event.target.checked);
+    let isItChecked = event.target.checked;
+    let song = this.props.data;
+    let indexOfList = event.target.id;
+    this.props.checkHandlerToStore(isItChecked, song, indexOfList);
+
+  }
+
+
   DropDownBuilder() {
-    // console.info(this.props);
-    // const storeDataPlayLists = store.getState().playListReducer;
     const storeDataPlayLists = this.props.playLists;
     // value of checkbox
     let checked = false;
+    let indexInList = -1;
     // dropdown builder
     return storeDataPlayLists.map((list, i) => {
       // checked value reset
       checked = false;
-
+      indexInList = i;
       // iterate songs for each list in order to define if each song exciste in list
       list.songs.map((song) => {
         if (song.id === this.props.data.id) {
@@ -88,12 +101,29 @@ class SongsCreator extends React.Component {
         }
       });
       return <label key={i} className="song-drop-down-label">
-        <input type="checkbox" checked={ checked }/>
+        <input type="checkbox" id={i} onChange={this.checkHandler} checked={ checked }/>
         {list.listTitle}</label>
     })
   }
 
-  componentDidUpdate() {
+
+  componentDidUpdate(prevProps, prevState) {
+    if ((this.state.isDropDownOpen === true) && (this.state.class === "fa fa-heart-o heart-font")) {
+      this.setState({class: "fa fa-heart heart-font-open"});
+      this.heartHandler()
+    }
+
+    if ((this.state.isDropDownOpen === false) && (this.state.class === "fa fa-heart heart-font-open")) {
+      this.setState({class: "fa fa-heart-o heart-font"});
+      this.heartHandler();
+    }
+    console.info(prevProps.playLists.length);
+    console.info(this.props.playLists.length);
+    if (this.props.playLists.length !== prevProps.playLists.length) {
+      // this.heartHandler();
+      console.info('fuck');
+    }
+
 
   }
 
@@ -162,6 +192,9 @@ function mapDispatchToProps(dispatch) {
     CreateAddListElmHandler(song) {
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
       dispatch({type: 'ADD-NEW-PLAYLIST', song: song, element: this.Elm})
+    },
+    checkHandlerToStore(isItChecked, song, indexOfList) {
+      dispatch({type: 'UPDATE-SONGS-IN-PLAYLIST', isItChecked: isItChecked, song: song, indexOfList: indexOfList})
     }
   }
 }

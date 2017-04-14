@@ -1,7 +1,7 @@
 import './playlist.scss'
 import React from 'react'
 import SongsCreator from '../songcreator/SongCreator'
-import store from '../../store';
+// import store from '../../store';
 import {connect} from 'react-redux';
 
 
@@ -21,23 +21,21 @@ class PlayListsCom extends React.Component {
   }
 
   componentDidMount() {
-    console.info(this.props);
-    const storeDataAddedNewPlayList = this.props.addedNewList;
 
+    let storeDataAddedNewPlayList = this.props.addedNewList;
     if (storeDataAddedNewPlayList === true) {
       this.setState({mode: 'input'});
     }
-    this.setState({value: this.list.listTitle});
+    this.setState({value: this.props.list.listTitle});
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.input) {
-
       this.input.focus();
       // store.dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
 
     }
-    /* if (this.list.listTitle === this.props.scrollTo) {
+    /*   if (this.list.listTitle === this.props.scrollTo) {
      this.playList.scrollIntoView({block: "start", behavior: "smooth"})
      }*/
 
@@ -50,21 +48,11 @@ class PlayListsCom extends React.Component {
 
   toggleHandler() {
     this.setState({mode: 'input'});
-
   }
 
-  deleteListHandler() {
-    console.info('here', this.props);
-    let title = this.list.listTitle;
-    confirm(`Deleting ${title} playlist. Are you sure?`);
-    this.props.deleteList(this.i);
-
-  }
 
   handleSubmit(event) {
-    this.props.SubmitHandlerToStore(this.i, this.state.value);
-
-
+    this.props.SubmitHandlerToStore(this.props.i, this.state.value);
     this.setState({mode: 'title'});
     event.preventDefault();
   }
@@ -73,16 +61,16 @@ class PlayListsCom extends React.Component {
     return (
       <ul ref={(evt) => this.playList = evt} className="playlist">
 
-
         <form onSubmit={this.handleSubmit}>
           <div className="for-hover">
             {(this.state.mode === 'title') &&
             <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
               {this.list.listTitle}
 
-
             </label>}
-            <button className="delete-btn" type="button" onClick={() => this.deleteListHandler()}>Delete</button>
+            <button className="delete-btn" type="button"
+                    onClick={() => this.props.deleteListHandler(this.props.list, this.props.i)}>Delete
+            </button>
           </div>
           {(this.state.mode === 'input') &&
           <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
@@ -96,9 +84,7 @@ class PlayListsCom extends React.Component {
           return <li key={song.id} className="song-card"><SongsCreator
             from={'Playlists'}
             list={this.props.list}
-            data={song}
-            updateCurrentTrack={this.props.updateCurrentTrack}
-            playLists={this.props.playLists}/>
+            data={song}/>
           </li>
         })}
       </ul>
@@ -127,7 +113,7 @@ class PlayListsCom extends React.Component {
 
  </form>*/
 }
-// (evt) => this.Label = evt
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -135,6 +121,14 @@ function mapDispatchToProps(dispatch) {
     SubmitHandlerToStore(index, newTitleName) {
       dispatch({type: 'UPDATE-LIST', index: index, newTitleName: newTitleName});
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
+    },
+
+    deleteListHandler(list, index) {
+      let title = list.listTitle;
+      confirm(`Deleting ${title} playlist. Are you sure?`);
+
+      dispatch({type: 'DELETE-LIST', index: index})
+
     }
   }
 }
@@ -142,7 +136,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(stateData) {
   return {
-    playLists: stateData.playListReducer
+    playLists: stateData.playListReducer,
+    addedNewList: stateData.addedNewPlayListReducer
   }
 }
 

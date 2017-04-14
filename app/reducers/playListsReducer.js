@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import store from '../store'
+// import store from '../store'
 
 const dummyData = [{
   listid: 666,
@@ -33,7 +33,7 @@ const dummyData = [{
   }]
 
 
-export default function playListsReducer(playlists = dummyData , action) {
+export default function playListsReducer(playlists = dummyData, action) {
   let copyOfPlayLists = [...playlists];
   switch (action.type) {
     case 'ADD-NEW-PLAYLIST':
@@ -52,10 +52,10 @@ export default function playListsReducer(playlists = dummyData , action) {
         }]
       };
 
-        if (action.song) {
-       playlist.songs.pop();
-       playlist.songs.push(action.song);
-       }
+      if (action.song) {
+        playlist.songs.pop();
+        playlist.songs.push(action.song);
+      }
       copyOfPlayLists.push(playlist);
 
 
@@ -68,11 +68,40 @@ export default function playListsReducer(playlists = dummyData , action) {
       copyOfPlayLists[action.index].listTitle = action.newTitleName;
       return copyOfPlayLists;
 
+    case 'DELETE-LIST':
 
 
+      copyOfPlayLists.splice(action.index, 1);
+      return copyOfPlayLists;
+    /*  deleteList(listIndex) {
+     let copyOfPlaylists = [...this.state.playlists];
+     console.info('copyofplaylists', copyOfPlaylists);
+     copyOfPlaylists.splice(listIndex, 1);
 
-    /*    case 'ADDED-NEW-LIST':
-     console.info(action.addedNewList);*/
+     this.setState({playlists: copyOfPlaylists});
+     }*/
+
+    case 'UPDATE-SONGS-IN-PLAYLIST':
+      // console.info(action.song);
+
+      if (action.isItChecked === true) {
+        // console.info('in true');
+        copyOfPlayLists[action.indexOfList].songs.push(action.song);
+        return copyOfPlayLists;
+      }
+      if (action.isItChecked === false) {
+        // console.info('in false');
+        let indexOfSong = copyOfPlayLists[action.indexOfList].songs.indexOf(action.song);
+        copyOfPlayLists[action.indexOfList].songs.splice(indexOfSong,1);
+
+       /* copyOfPlayLists[action.indexOfList].songs.map((song) => {
+          if (song.id === action.song.id) {
+            console.info('found it');
+          }
+        })*/
+       return copyOfPlayLists;
+
+      }
 
   }
 

@@ -12,7 +12,7 @@ class Playlists extends React.Component {
     };
 
     // this.addNewListHandler = this.addNewListHandler.bind(this);
-    this.deleteList = this.deleteList.bind(this)
+    // this.deleteList = this.deleteList.bind(this)
 
   }
 
@@ -27,9 +27,9 @@ class Playlists extends React.Component {
 
 
   listBuilderInBar() {
-     const playLists = this.props.playLists;
-
+    const playLists = this.props.playLists;
     return playLists.map((list, i) => {
+      // console.info('in bar',i);
       return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list" key={i}
                  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
     })
@@ -42,45 +42,34 @@ class Playlists extends React.Component {
 
 
   listBuilderInPlaylists() {
-    const playLists = this.props.playLists;
-
+    let playLists = this.props.playLists;
     return playLists.map((list, i) => {
-      return (
-
-        <PlayList
-          scrollTo={this.state.scrollTo}
-          playLists={this.props.playLists}
-          addedNewList={this.props.addedNewList && this.props.playLists.length - 1}
-          key={i}
-          i={i}
-          list={list}
-          updateCurrentTrack={this.props.updateCurrentTrack}
-          updateList=
-            {this.props.updateList}
-          deleteList={this.deleteList}
-        />
-      )
+      // console.info('in playlists', i);
+      return <PlayList
+        scrollTo={this.state.scrollTo}
+        key={i}
+        i={i}
+        list={list}
+      />
     })
   }
-
-
 
 
   deleteList(i) {
     // let title = this.list.listTitle;
     // confirm(`Deleting ${title} playlist. Are you sure?`);
-    this.props.deleteList(i);
+    // this.props.deleteList(i);
 
   }
 
 
   render() {
-
     return (
       <div className="playlists">
         <div className="playlist-bar">
           <div className="playlist-bar-top">
-            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewListHandler() }>Add new playlist
+            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewListHandler() }>Add new
+              playlist
             </button>
           </div>
           <div className="playlist-bar-separator"/>
@@ -119,3 +108,17 @@ function mapStateToProps(stateData) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists)
+
+
+/*
+ <PlayList
+ scrollTo={this.state.scrollTo}
+ playLists={this.props.playLists}
+ addedNewList={this.props.addedNewList && this.props.playLists.length - 1}
+ key={i}
+ i={i}
+ list={list}
+
+
+
+ />*/
