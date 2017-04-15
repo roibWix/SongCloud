@@ -26,25 +26,26 @@ class Playlists extends React.Component {
   }
 
 
+  componentDidUpdate(prevProps, prevState) {
+
+
+  }
+
   listBuilderInBar() {
     const playLists = this.props.playLists;
     return playLists.map((list, i) => {
       // console.info('in bar',i);
-      return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list" key={i}
+      return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list"
+                 key={i}
                  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
     })
 
   }
 
-  componentDidUpdate() {
-
-  }
-
 
   listBuilderInPlaylists() {
-    let playLists = this.props.playLists;
+    const playLists = this.props.playLists;
     return playLists.map((list, i) => {
-      // console.info('in playlists', i);
       return <PlayList
         scrollTo={this.state.scrollTo}
         key={i}
@@ -95,7 +96,7 @@ function mapDispatchToProps(dispatch) {
     addNewListHandler() {
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
       dispatch({
-        type: 'ADD-NEW-PLAYLIST',
+        type: 'ADD-NEW-PLAYLIST'
       });
     }
   }

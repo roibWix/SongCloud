@@ -72,38 +72,29 @@ export default function playListsReducer(playlists = dummyData, action) {
 
 
       copyOfPlayLists.splice(action.index, 1);
+      // console.info(copyOfPlayLists);
       return copyOfPlayLists;
-    /*  deleteList(listIndex) {
-     let copyOfPlaylists = [...this.state.playlists];
-     console.info('copyofplaylists', copyOfPlaylists);
-     copyOfPlaylists.splice(listIndex, 1);
 
-     this.setState({playlists: copyOfPlaylists});
-     }*/
 
     case 'UPDATE-SONGS-IN-PLAYLIST':
-      // console.info(action.song);
 
-      if (action.isItChecked === true) {
-        // console.info('in true');
-        copyOfPlayLists[action.indexOfList].songs.push(action.song);
-        return copyOfPlayLists;
+      switch (action.isItChecked) {
+
+        case true: //add song to playlist
+          copyOfPlayLists[action.indexOfList].songs.push(action.song);
+          return copyOfPlayLists;
+
+
+        case false: //remove song from playlist
+          let indexOfSong = copyOfPlayLists[action.indexOfList].songs.indexOf(action.song);
+          copyOfPlayLists[action.indexOfList].songs.splice(indexOfSong, 1);
       }
-      if (action.isItChecked === false) {
-        // console.info('in false');
-        let indexOfSong = copyOfPlayLists[action.indexOfList].songs.indexOf(action.song);
-        copyOfPlayLists[action.indexOfList].songs.splice(indexOfSong,1);
 
-       /* copyOfPlayLists[action.indexOfList].songs.map((song) => {
-          if (song.id === action.song.id) {
-            console.info('found it');
-          }
-        })*/
-       return copyOfPlayLists;
 
-      }
+      return copyOfPlayLists;
 
   }
+
 
   return playlists;
 

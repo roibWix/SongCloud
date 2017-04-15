@@ -13,8 +13,8 @@ class PlayListsCom extends React.Component {
       value: ''
 
     };
-    this.list = props.list;
-    this.i = props.i;
+    // this.list = props.list;
+    // this.i = props.i;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,6 +35,9 @@ class PlayListsCom extends React.Component {
       // store.dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
 
     }
+
+
+
     /*   if (this.list.listTitle === this.props.scrollTo) {
      this.playList.scrollIntoView({block: "start", behavior: "smooth"})
      }*/
@@ -65,7 +68,7 @@ class PlayListsCom extends React.Component {
           <div className="for-hover">
             {(this.state.mode === 'title') &&
             <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
-              {this.list.listTitle}
+              {this.props.list.listTitle}
 
             </label>}
             <button className="delete-btn" type="button"
@@ -79,8 +82,7 @@ class PlayListsCom extends React.Component {
         </form>
 
 
-        {this.list.songs.map((song, i) => {
-
+        {this.props.list.songs.map((song, i) => {
           return <li key={song.id} className="song-card"><SongsCreator
             from={'Playlists'}
             list={this.props.list}
@@ -124,9 +126,11 @@ function mapDispatchToProps(dispatch) {
     },
 
     deleteListHandler(list, index) {
+
+      // console.info('list',list);
+      // console.info('index',index);
       let title = list.listTitle;
       confirm(`Deleting ${title} playlist. Are you sure?`);
-
       dispatch({type: 'DELETE-LIST', index: index})
 
     }

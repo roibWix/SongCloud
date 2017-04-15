@@ -68,7 +68,7 @@
     top: 93%;
     right: 10px;
     width: 130px;
-    height: 110px;
+    min-height: 110px;
     z-index: 30;
     flex-direction: column;
     display: none;
@@ -76,22 +76,27 @@
     background: #FFFFFF;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 
-
-
   }
-
-
 
   .song-drop-down-add-to-title {
     font-family: Roboto-Bold;
     font-size: 11px;
     color: #4A4A4A;
+    border-bottom: 1px solid #E0E0E0;
+    width: 110px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin: 0 auto;
   }
 
   .song-drop-down-add-to-btn {
     font-family: Roboto-Regular;
     font-size: 9px;
     color: #2196F3;
+    width: 110px;
+    margin: 0 auto;
+    line-height: 2;
+    text-decoration: none;
   }
 
   .song-drop-down-label {
@@ -100,7 +105,29 @@
     font-size: 9px;
     color: #4A4A4A;
     line-height: 12px;
+    width: 110px;
+    margin: 0 auto;
+    position: relative;
+
+
+    .indicator {
+      border-radius: 3px;
+      border: 1px solid #dde4e6;
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 0.9rem;
+      height: 0.9rem;
+      background-color: #ffff;
+      cursor: pointer;
+      transition: all .2s ease-in;
+    }
   }
+  .song-drop-down-label input {
+    opacity: 0
+  }
+
+
 
 }
 

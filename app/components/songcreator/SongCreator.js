@@ -40,29 +40,6 @@ class SongsCreator extends React.Component {
       });
     })
 
-
-    /*    if (this.props.from === 'Playlists') {
-     console.info(this.props.list);
-
-
-     return this.props.list.songs.map
-
-
-     return this.props.playLists.map((list, i) => {
-     return list.songs.map((song) => {
-     if (song.id === this.props.data.id) {
-     this.setState({
-     checker: true,
-     class: "fa fa-heart heart-font"
-     })
-     }
-     });
-     })
-
-
-     }*/
-
-
   }
 
 
@@ -75,12 +52,10 @@ class SongsCreator extends React.Component {
 
 
   checkHandler(event) {
-    // console.info(event.target.checked);
     let isItChecked = event.target.checked;
     let song = this.props.data;
     let indexOfList = event.target.id;
     this.props.checkHandlerToStore(isItChecked, song, indexOfList);
-
   }
 
 
@@ -102,26 +77,26 @@ class SongsCreator extends React.Component {
       });
       return <label key={i} className="song-drop-down-label">
         <input type="checkbox" id={i} onChange={this.checkHandler} checked={ checked }/>
-        {list.listTitle}</label>
+        {list.listTitle}
+        <span className="indicator"/>
+        </label>
     })
   }
 
 
   componentDidUpdate(prevProps, prevState) {
-    if ((this.state.isDropDownOpen === true) && (this.state.class === "fa fa-heart-o heart-font")) {
-      this.setState({class: "fa fa-heart heart-font-open"});
-      this.heartHandler()
+    if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
+      this.setState({
+        class: "fa fa-heart heart-font"
+      });
     }
 
-    if ((this.state.isDropDownOpen === false) && (this.state.class === "fa fa-heart heart-font-open")) {
-      this.setState({class: "fa fa-heart-o heart-font"});
-      this.heartHandler();
-    }
-    console.info(prevProps.playLists.length);
-    console.info(this.props.playLists.length);
-    if (this.props.playLists.length !== prevProps.playLists.length) {
-      // this.heartHandler();
-      console.info('fuck');
+    if ((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false)) {
+      this.setState({
+        class: "fa fa-heart-o heart-font"
+      });
+      this.heartHandler()
+
     }
 
 
@@ -136,6 +111,8 @@ class SongsCreator extends React.Component {
       }} onClick={() => this.props.CreateAddListElmHandler(this.props.data) }
                     className="song-drop-down-add-to-btn">Create playlist +</Link>)
     }
+
+
 
   }
 
@@ -165,8 +142,9 @@ class SongsCreator extends React.Component {
         />
 
         <div className={dropDownclassName} ref={(element) => this.DropDown = element}>
-          <span className="song-drop-down-add-to-title">Add to Playlist</span>
+          {(this.props.from === 'Explore') && <span className="song-drop-down-add-to-title">Add to Playlist</span>}
 
+          {(this.props.from === 'Playlists') && <span className="song-drop-down-add-to-title">Edit Playlist</span>}
           {this.CreateAddListElm()}
 
           {this.DropDownBuilder()}
