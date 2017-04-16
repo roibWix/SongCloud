@@ -23,12 +23,11 @@ export default class Topbar extends React.Component {
     evt.preventDefault();
 
     console.info(this.search.value);
-    return <Route path={this.search.value}/>
 
   }
 
   render() {
-    let searchValue = this.search? this.search.value : undefined;
+    let searchValue = this.search ? this.search.value : undefined;
     return (
 
       <header className="top-bar">
@@ -49,7 +48,7 @@ export default class Topbar extends React.Component {
             <div className="searchintopnav">
 
 
-              <form action={`/explore/${searchValue}`} method="POST">
+              <form action={`/explore/${searchValue}`} method="POST" onSubmit={this. onSubmit}>
                 <button type="submit" value="submit" className="search-sign"></button>
                 <input ref={(search) => this.search = search} className="search" type="search" placeholder="SEARCH"/>
                 <Link to="/Signin" className="logout topnavli">Log out</Link>

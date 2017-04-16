@@ -21,7 +21,6 @@ class PlayListsCom extends React.Component {
   }
 
   componentDidMount() {
-
     let storeDataAddedNewPlayList = this.props.addedNewList;
     if (storeDataAddedNewPlayList === true) {
       this.setState({mode: 'input'});
@@ -32,15 +31,13 @@ class PlayListsCom extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.input) {
       this.input.focus();
-      // store.dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
+
+    }
+    if ((this.state.mode === 'title') && (this.props.list.listid === this.props.scrollTo)) {
+      this.playList.scrollIntoView({block: "start", behavior: "smooth"})
 
     }
 
-
-
-    /*   if (this.list.listTitle === this.props.scrollTo) {
-     this.playList.scrollIntoView({block: "start", behavior: "smooth"})
-     }*/
 
   }
 
@@ -93,28 +90,6 @@ class PlayListsCom extends React.Component {
     )
   }
 }
-{/*<div onClick={() => this.editNameModeHandler()} className={titleContainerClassName}>    </div>*/
-}
-{/* <h2 className={titleContainerClassName} key={this.i}
- onClick={(event) => this.handler(event)}>{this.list.listTitle}</h2>
- <input type="text" className={titleContainerClassName} value={this.list.listTitle} ref={(evt) => this.Elm = evt}
- onChange={this.deleteList}/>*/
-}
-{/*     <form onSubmit={this.handleSubmit.bind(this)}>
-
-
- <label className={titleContainerClassName} key={this.i}
- onClick={(event) => this.handler(event)}>{this.list.listTitle}>
- name:</label>
- <input type="text" name="name" className={titleContainerClassName} value={this.state.listTitle}
- ref={(evt) => this.Elm = evt}
- onChange={this.deleteList}
- onBlur={ () => this.inputEditMode() }/>
-
- <input className="submit" type="submit" value="submit"/>
-
- </form>*/
-}
 
 
 function mapDispatchToProps(dispatch) {
@@ -126,13 +101,11 @@ function mapDispatchToProps(dispatch) {
     },
 
     deleteListHandler(list, index) {
-
-      // console.info('list',list);
-      // console.info('index',index);
       let title = list.listTitle;
-      confirm(`Deleting ${title} playlist. Are you sure?`);
-      dispatch({type: 'DELETE-LIST', index: index})
-
+      const isSure = confirm(`Deleting ${title} playlist. Are you sure?`);
+      if (isSure === true) {
+        dispatch({type: 'DELETE-LIST', index: index});
+      }
     }
   }
 }

@@ -11,9 +11,8 @@ class Playlists extends React.Component {
       scrollTo: null
     };
 
-    // this.addNewListHandler = this.addNewListHandler.bind(this);
-    // this.deleteList = this.deleteList.bind(this)
 
+    this.headerScroller = this.headerScroller.bind(this)
   }
 
   componentDidMount() {
@@ -21,27 +20,29 @@ class Playlists extends React.Component {
 
   }
 
-  headerScroller(title) {
-    this.setState({scrollTo: title});
+  headerScroller(listId) {
+    this.setState({scrollTo: listId});
   }
 
 
   componentDidUpdate(prevProps, prevState) {
-
-
+     if (this.state.scrollTo !== null) {
+      this.setState({scrollTo: null});
+    }
   }
 
   listBuilderInBar() {
     const playLists = this.props.playLists;
     return playLists.map((list, i) => {
       // console.info('in bar',i);
-      return <li onClick={() => this.headerScroller(list.listTitle)} className="playlist-bar-list"
+      return <li onClick={() => this.headerScroller(list.listid)}
+                 onBlur={() => this.headerScroller(null)}
+                 className="playlist-bar-list"
                  key={i}
                  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
     })
 
   }
-
 
   listBuilderInPlaylists() {
     const playLists = this.props.playLists;
@@ -51,16 +52,9 @@ class Playlists extends React.Component {
         key={i}
         i={i}
         list={list}
+        ref={(evt) => this.last = evt}
       />
     })
-  }
-
-
-  deleteList(i) {
-    // let title = this.list.listTitle;
-    // confirm(`Deleting ${title} playlist. Are you sure?`);
-    // this.props.deleteList(i);
-
   }
 
 

@@ -10,127 +10,134 @@
     background-size: cover;
     margin: 10px 10px 10px 10px;
   }
+    .song-title {
+      padding: 10px;
 
-  .song-title {
-    padding: 10px;
+    }
 
-  }
+    .clock {
+      font-family: FontAwesome;
+      font-size: 10px;
+      color: #4A4A4A;
+      line-height: 13px;
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+    }
 
-  .clock {
-    font-family: FontAwesome;
-    font-size: 10px;
-    color: #4A4A4A;
-    line-height: 13px;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-  }
+    .song-duration {
+      display: block;
+      position: absolute;
+      left: 22.5px;
+      bottom: 10px;
 
-  .song-duration {
-    display: block;
-    position: absolute;
-    left: 22.5px;
-    bottom: 10px;
+    }
 
-  }
+    .heart-font {
+      font-size: 14px;
+      color: #D8D8D8;
+      transition: all .2s ease-in-out;
+      font-family: FontAwesome;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      &:hover {
+        color: #2196F3;
+        transform: scale(1.10);
 
-  .heart-font {
-    font-size: 14px;
-    color: #D8D8D8;
-    transition: all .2s ease-in-out;
-    font-family: FontAwesome;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    &:hover {
+      }
+    }
+    .heart-font-open {
+      font-size: 14px;
+      //transition: all .2s ease-in-out;
+      font-family: FontAwesome;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
       color: #2196F3;
       transform: scale(1.10);
-
     }
-  }
-  .heart-font-open {
-    font-size: 14px;
-    //transition: all .2s ease-in-out;
-    font-family: FontAwesome;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    color: #2196F3;
-    transform: scale(1.10);
-  }
 
-  .fa-heart {
-    color: #2196F3;
-  }
+    .fa-heart {
+      color: #2196F3;
+    }
 
-  .song-drop-down {
-    position: absolute;
-    top: 93%;
-    right: 10px;
-    width: 130px;
-    min-height: 110px;
-    z-index: 30;
-    flex-direction: column;
-    display: none;
-
-    background: #FFFFFF;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-
-  }
-
-  .song-drop-down-add-to-title {
-    font-family: Roboto-Bold;
-    font-size: 11px;
-    color: #4A4A4A;
-    border-bottom: 1px solid #E0E0E0;
-    width: 110px;
-    padding-top: 10px;
-    padding-bottom: 5px;
-    margin: 0 auto;
-  }
-
-  .song-drop-down-add-to-btn {
-    font-family: Roboto-Regular;
-    font-size: 9px;
-    color: #2196F3;
-    width: 110px;
-    margin: 0 auto;
-    line-height: 2;
-    text-decoration: none;
-  }
-
-  .song-drop-down-label {
-
-    font-family: Roboto-Regular;
-    font-size: 9px;
-    color: #4A4A4A;
-    line-height: 12px;
-    width: 110px;
-    margin: 0 auto;
-    position: relative;
-
-
-    .indicator {
-      border-radius: 3px;
-      border: 1px solid #dde4e6;
+    .song-drop-down {
       position: absolute;
-      left: 0;
-      top: 9px;
-      width: 0.9rem;
-      height: 0.9rem;
-      background-color: #ffff;
-      cursor: pointer;
-      transition: all .2s ease-in;
+      top: 93%;
+      right: 10px;
+      width: 130px;
+      min-height: 110px;
+      z-index: 30;
+      flex-direction: column;
+      display: none;
+
+      background: #FFFFFF;
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+
+      .song-drop-down-add-to-title {
+        font-family: Roboto-Bold;
+        font-size: 11px;
+        color: #4A4A4A;
+        border-bottom: 1px solid #E0E0E0;
+        width: 110px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin: 0 auto;
+      }
+
+      .song-drop-down-add-to-btn {
+        font-family: Roboto-Regular;
+        font-size: 9px;
+        color: #2196F3;
+        width: 110px;
+        margin: 0 auto;
+        line-height: 2;
+        text-decoration: none;
+      }
+
+      .song-drop-down-label {
+
+        font-family: Roboto-Regular;
+        font-size: 9px;
+        color: #4A4A4A;
+        line-height: 12px;
+        width: 110px;
+        margin: 0 auto;
+        padding-left: 6px;
+        position: relative;
+
+        .indicator {
+          border-radius: 3px;
+          border: 1px solid #dde4e6;
+          position: absolute;
+          left: 6px;
+          top: 4px;
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: #ffff;
+          cursor: pointer;
+          transition: all .2s ease-in;
+
+        }
+        &:hover {
+          .indicator {
+            border: 1px solid #2196f3;
+          }
+        }
+      }
+
+      .song-drop-down-label input {
+        opacity: 0;
+      }
+      .song-drop-down-label input:checked ~ .indicator {
+        background: #2196f3 url('data:image/svg+xml;utf8,<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 75"><defs><style>.cls-1{fill:#fff;}</style></defs><title>Artboard 1</title><g id="GyyoQ7.tif"><path class="cls-1" d="M71.23,18.81l-6.12-6.12a4.05,4.05,0,0,0-5.73,0h0L30.59,41.48l-13-13a4,4,0,0,0-5.73,0h0L5.77,34.64a4.05,4.05,0,0,0,0,5.73h0L21.6,56.19l6.12,6.12a4.05,4.05,0,0,0,5.73,0h0l6.12-6.12L71.23,24.54a4,4,0,0,0,0-5.73Z"/></g></svg>') no-repeat;
+      }
+
+
+
     }
   }
-  .song-drop-down-label input {
-    opacity: 0
-  }
-
-
-
-}
-
 .song-card {
   display: flex;
   text-decoration: none;
@@ -145,18 +152,9 @@
   margin: 20px;
 }
 
-/*.song-card .song-title {
-  padding: 10px;
 
-}
 
-.song-card .song-duration {
-  display: block;
-  position: absolute;
-  left: 22.5px;
-  bottom: 10px;
 
-}*/
 
 
 

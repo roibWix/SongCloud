@@ -79,7 +79,7 @@ class SongsCreator extends React.Component {
         <input type="checkbox" id={i} onChange={this.checkHandler} checked={ checked }/>
         {list.listTitle}
         <span className="indicator"/>
-        </label>
+      </label>
     })
   }
 
@@ -111,7 +111,6 @@ class SongsCreator extends React.Component {
       }} onClick={() => this.props.CreateAddListElmHandler(this.props.data) }
                     className="song-drop-down-add-to-btn">Create playlist +</Link>)
     }
-
 
 
   }

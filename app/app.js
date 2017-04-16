@@ -16,13 +16,6 @@ ReactDOM.render(
     <Routes/>
   </Provider>,
   document.querySelector('#root'));
-/*
-function renderApp() {
 
-
-
-}
-renderApp();
-*/
 
 
