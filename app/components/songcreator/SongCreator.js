@@ -129,9 +129,14 @@ class SongsCreator extends React.Component {
 
     return (
       <div className="songs-creator" ref={(song) => this.song = song}>
+
         <div className="img-song" style={{
           backgroundImage: `url(${songImage})`
-        }} onClick={() => this.props.updateSongInPlayer(this.props.data)}/>
+        }} onClick={() => this.props.updateSongInPlayer(this.props.data)}>
+          <div className="img-song-player-mode"><span></span></div>
+        </div>
+
+
         <span className="song-title">{songTitle + '...'}</span>
         <span className="clock"></span>
         <span className="song-duration">{songDuration}</span>

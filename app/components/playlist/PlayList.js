@@ -59,25 +59,31 @@ class PlayListsCom extends React.Component {
 
   render() {
     return (
-      <ul ref={(evt) => this.playList = evt} className="playlist">
 
-        <form onSubmit={this.handleSubmit}>
-          <div className="for-hover">
-            {(this.state.mode === 'title') &&
-            <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
-              {this.props.list.listTitle}
+      <ul className="playlist">
 
-            </label>}
-            <button className="delete-btn" type="button"
-                    onClick={() => this.props.deleteListHandler(this.props.list, this.props.i)}>Delete
-            </button>
-          </div>
-          {(this.state.mode === 'input') &&
-          <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
-                 ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
+        <li>
+          <form onSubmit={this.handleSubmit}>
+            <div className="for-hover">
+              {(this.state.mode === 'title') &&
+              <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
+                {this.props.list.listTitle}
+                <div className="counter-bg">
+                  <span className="counter"> {this.props.list.songs.length}</span>
+                </div>
 
-        </form>
+              </label>}
+              <button className="delete-btn" type="button"
+                      onClick={() => this.props.deleteListHandler(this.props.list, this.props.i)}>Delete
+              </button>
+            </div>
+            {(this.state.mode === 'input') &&
+            <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
+                   ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
 
+          </form>
+        </li>
+        <li ref={(evt) => this.playList = evt} className="scroll-to"/>
 
         {this.props.list.songs.map((song, i) => {
           return <li key={song.id} className="song-card"><SongsCreator

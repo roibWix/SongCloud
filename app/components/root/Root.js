@@ -17,11 +17,12 @@ export default class Root extends React.Component {
   }
 
   render() {
+    console.info(this);
     return (
       <div>
-        <Topbar/>
+        <Topbar history={this.props.history}/>
         <main>
-          <switch>
+          <Switch>
             <Route exact path="/" component={() => {
               return <Redirect to="/explore"/>
             }}/>
@@ -30,7 +31,7 @@ export default class Root extends React.Component {
             }}/>
             <Route path="/explore/:genre" component={Explore}/>
             <Route exact path="/playlists" component={Playlists}/>
-          </switch>
+          </Switch>
         </main>
         <Player/>
       </div>

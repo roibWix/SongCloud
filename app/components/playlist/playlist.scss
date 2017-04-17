@@ -1,11 +1,23 @@
 @import 'assets/styles/colors';
 
+
+
 .playlist {
   position: relative;
+
+  list-style: none;
+
+
+  .scroll-to {
+    position: absolute;
+    top: -5rem;
+    left: 0;
+  }
 
   form {
 
     .for-hover {
+      position: relative;
 
       &:hover {
 
@@ -19,7 +31,8 @@
       .delete-btn {
         position: absolute;
         left: 87%;
-        top: 10%;
+        //top: 10%;
+        top: 35%;
         background-color: #FFFFFF;
         border: 0;
         display: none;
@@ -31,6 +44,25 @@
         color: #F44336;
         z-index: 20;
         font-weight: bold;
+      }
+      .counter-bg {
+
+        margin-left: 0px;
+        top: 10px;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #2196F3;
+        border-radius: 20px;
+        display: inline-block;
+        color: white;
+      }
+
+      .counter {
+        font-size: 10px;
+        position: absolute;
+        top: 5px;
+        left: 7px;
       }
     }
     .playlist-title {

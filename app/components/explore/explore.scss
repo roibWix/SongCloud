@@ -90,6 +90,9 @@
       color: #000000;
       line-height: 40px;
     }
+    .prebtn:disabled {
+      background-color:  #D8D8D8;
+    }
   }
 }
 

@@ -168,4 +168,3 @@ export default class Explore extends React.Component {
   }
 
 }
-// updateCurrentTrack={this.props.updateCurrentTrack}

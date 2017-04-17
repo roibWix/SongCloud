@@ -5,7 +5,7 @@ import {NavLink, Route, Link} from 'react-router-dom';
 import React from 'react';
 
 export default class Topbar extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.onSubmit = this.onSubmit.bind(this);
 
@@ -13,21 +13,19 @@ export default class Topbar extends React.Component {
 
 
   componentDidMount() {
-    // searchValue = this.search.value;
-
 
   }
-
 
   onSubmit(evt) {
     evt.preventDefault();
-
-    console.info(this.search.value);
-
+    // input element value
+    const searchValue = this.search.value;
+    if (searchValue.length > 0) {
+      this.props.history.push(searchValue);
+    }
   }
 
   render() {
-    let searchValue = this.search ? this.search.value : undefined;
     return (
 
       <header className="top-bar">
@@ -48,7 +46,7 @@ export default class Topbar extends React.Component {
             <div className="searchintopnav">
 
 
-              <form action={`/explore/${searchValue}`} method="POST" onSubmit={this. onSubmit}>
+              <form onSubmit={this.onSubmit}>
                 <button type="submit" value="submit" className="search-sign"></button>
                 <input ref={(search) => this.search = search} className="search" type="search" placeholder="SEARCH"/>
                 <Link to="/Signin" className="logout topnavli">Log out</Link>
@@ -61,4 +59,4 @@ export default class Topbar extends React.Component {
     )
   }
 }
-// onSubmit={this.onSubmit}
+

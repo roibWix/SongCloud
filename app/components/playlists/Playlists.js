@@ -16,7 +16,7 @@ class Playlists extends React.Component {
   }
 
   componentDidMount() {
-
+// console.info('first time',this);
 
   }
 
@@ -29,6 +29,7 @@ class Playlists extends React.Component {
      if (this.state.scrollTo !== null) {
       this.setState({scrollTo: null});
     }
+    // console.info('did update',this);
   }
 
   listBuilderInBar() {
