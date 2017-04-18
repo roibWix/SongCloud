@@ -32,10 +32,26 @@ const dummyData = [{
     }]
   }]
 
+const myJsonString = JSON.stringify(dummyData);
 
-export default function playListsReducer(playlists = dummyData, action) {
+// console.info(myJsonString);
+
+
+export default function playListsReducer(playlists = [], action) {
   let copyOfPlayLists = [...playlists];
   switch (action.type) {
+    case 'PLAYLISTS-FROM-SERVER':
+
+      if (playlists.length > 0) {
+        return playlists;
+      }
+
+      if (playlists.length === 0) {
+        return action.data;
+      }
+
+      return playlists;
+
     case 'ADD-NEW-PLAYLIST':
 
       let newuuid = uuid();
@@ -79,14 +95,17 @@ export default function playListsReducer(playlists = dummyData, action) {
     case 'UPDATE-SONGS-IN-PLAYLIST':
 
       switch (action.isItChecked) {
+        //add song to playlist
+        case true:
 
-        case true: //add song to playlist
           copyOfPlayLists[action.indexOfList].songs.push(action.song);
           return copyOfPlayLists;
 
+        //remove song from playlist
+        case false:
 
-        case false: //remove song from playlist
           let indexOfSong = copyOfPlayLists[action.indexOfList].songs.indexOf(action.song);
+
           copyOfPlayLists[action.indexOfList].songs.splice(indexOfSong, 1);
       }
 

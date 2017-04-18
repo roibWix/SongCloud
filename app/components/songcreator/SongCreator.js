@@ -16,7 +16,10 @@ class SongsCreator extends React.Component {
     };
 
     // this.CreateAddListElmHandler = this.CreateAddListElmHandler.bind(this)
-    this.checkHandler = this.checkHandler.bind(this)
+    this.checkHandler = this.checkHandler.bind(this);
+    this.DropDownModeHandler = this.DropDownModeHandler.bind(this);
+    this.handler = this.handler.bind(this)
+    this.DropDownBuilder = this.DropDownBuilder.bind(this)
   };
 
 
@@ -43,7 +46,7 @@ class SongsCreator extends React.Component {
   }
 
 
-  heartClicker(elm) {
+  heartClicker() {
 
     this.setState({isDropDownOpen: !this.state.isDropDownOpen});
 
@@ -59,7 +62,7 @@ class SongsCreator extends React.Component {
   }
 
 
-  DropDownBuilder() {
+  CheckBoxBuilder() {
     const storeDataPlayLists = this.props.playLists;
     // value of checkbox
     let checked = false;
@@ -76,7 +79,10 @@ class SongsCreator extends React.Component {
         }
       });
       return <label key={i} className="song-drop-down-label">
-        <input type="checkbox" id={i} onChange={this.checkHandler} checked={ checked }/>
+        <input type="checkbox"
+               id={i}
+               onChange={this.checkHandler}
+               checked={ checked }/>
         {list.listTitle}
         <span className="indicator"/>
       </label>
@@ -115,10 +121,41 @@ class SongsCreator extends React.Component {
 
   }
 
-  render() {
+  DropDownModeHandler() {
 
+    if (this.props.from === 'Explore') {
+      return <span className="song-drop-down-add-to-title">Add to Playlist</span>
+    }
+
+    if (this.props.from === 'Playlists') {
+      return <span className="song-drop-down-add-to-title">Edit Playlist</span>
+    }
+
+
+  }
+
+  DropDownBuilder() {
     const dropDownclassName = this.state.isDropDownOpen ? 'song-drop-down show' : 'song-drop-down';
+    return (
 
+
+      <div className={dropDownclassName}>
+        {this.DropDownModeHandler()}
+        {this.CreateAddListElm()}
+        {this.CheckBoxBuilder()}
+      </div>
+
+    )
+
+
+  }
+
+
+  handler() {
+    this.setState({isDropDownOpen: false})
+  }
+
+  render() {
 
     let songImage = this.props.data.artwork_url ? this.props.data.artwork_url.replace('large', 't300x300') : this.props.data.artwork_url;
     const songTitle = this.props.data.title ? this.props.data.title.slice(0, 30) : null;
@@ -141,26 +178,16 @@ class SongsCreator extends React.Component {
         <span className="clock"></span>
         <span className="song-duration">{songDuration}</span>
 
-        <i className={this.state.class} ref={(element) => this.Heart = element} onClick={() => this.heartClicker()}
-           aria-hidden="true"
-        />
+        <i className={this.state.class} onClick={() => this.heartClicker()}
+           aria-hidden="true"/>
 
-        <div className={dropDownclassName} ref={(element) => this.DropDown = element}>
-          {(this.props.from === 'Explore') && <span className="song-drop-down-add-to-title">Add to Playlist</span>}
+        {this.DropDownBuilder()}
 
-          {(this.props.from === 'Playlists') && <span className="song-drop-down-add-to-title">Edit Playlist</span>}
-          {this.CreateAddListElm()}
-
-          {this.DropDownBuilder()}
-        </div>
       </div>
     )
   }
 
 }
-
-// () => this.updateSongInPlayer()
-// onClick={() => this.props.addNewList(this.props.data, this.Elm)}
 
 
 function mapDispatchToProps(dispatch) {

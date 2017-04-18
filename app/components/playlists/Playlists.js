@@ -16,9 +16,25 @@ class Playlists extends React.Component {
   }
 
   componentDidMount() {
-// console.info('first time',this);
 
+
+
+
+
+    this.getXhr()
   }
+
+  getXhr() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `http://localhost:3000/playlists`);
+
+    xhr.addEventListener('load', () => {
+      const playList = JSON.parse(xhr.responseText);
+      this.props.updatePlaylistsFromServer(playList);
+    });
+    xhr.send()
+  }
+
 
   headerScroller(listId) {
     this.setState({scrollTo: listId});
@@ -26,7 +42,7 @@ class Playlists extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-     if (this.state.scrollTo !== null) {
+    if (this.state.scrollTo !== null) {
       this.setState({scrollTo: null});
     }
     // console.info('did update',this);
@@ -93,6 +109,9 @@ function mapDispatchToProps(dispatch) {
       dispatch({
         type: 'ADD-NEW-PLAYLIST'
       });
+    },
+    updatePlaylistsFromServer(data) {
+      dispatch({type: 'PLAYLISTS-FROM-SERVER', data: data})
     }
   }
 }

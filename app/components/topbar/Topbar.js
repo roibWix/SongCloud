@@ -13,7 +13,6 @@ export default class Topbar extends React.Component {
 
 
   componentDidMount() {
-
   }
 
   onSubmit(evt) {
@@ -21,7 +20,7 @@ export default class Topbar extends React.Component {
     // input element value
     const searchValue = this.search.value;
     if (searchValue.length > 0) {
-      this.props.history.push(searchValue);
+      this.props.history.push(`${searchValue}?search=true`);
     }
   }
 
@@ -48,7 +47,11 @@ export default class Topbar extends React.Component {
 
               <form onSubmit={this.onSubmit}>
                 <button type="submit" value="submit" className="search-sign"></button>
-                <input ref={(search) => this.search = search} className="search" type="search" placeholder="SEARCH"/>
+                <input ref={(search) => this.search = search}
+                       className="search"
+                       type="search"
+                       placeholder="SEARCH"/>
+
                 <Link to="/Signin" className="logout topnavli">Log out</Link>
               </form>
             </div>

@@ -16,11 +16,17 @@ export default class Root extends React.Component {
     super();
   }
 
+  componentDidMount() {
+    console.info('fuck');
+  }
+
+
+
+
   render() {
-    console.info(this);
     return (
       <div>
-        <Topbar history={this.props.history}/>
+        <Topbar history={this.props.history} />
         <main>
           <Switch>
             <Route exact path="/" component={() => {

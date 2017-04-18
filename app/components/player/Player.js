@@ -9,7 +9,6 @@ class Player extends React.Component {
   }
 
   componentDidMount() {
-    console.info(this);
   }
 
   render() {
@@ -23,7 +22,6 @@ class Player extends React.Component {
         <div className="image-in-player" style={{backgroundImage: `url(${songImage})`}}/>
         <span>{songTitle}</span>
         <audio className="playerElm" controls src={songUrl} autoPlay ref={(elm) => this.player = elm}/>
-
       </footer>
     )
   }

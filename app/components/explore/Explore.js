@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom';
 import {setSong} from '../root/Root'
 
 
-let xhr;
+// let xhr;
 export default class Explore extends React.Component {
   constructor(props) {
     super();
@@ -29,21 +29,19 @@ export default class Explore extends React.Component {
   }
 
 
-/*  componentWillReceiveProps() {
-    const prevGenre = prevProps.match.params.genre;
-    const targetGenre = this.props.match.params.genre;
 
-    if (prevGenre !== targetGenre) {
-      this.setState({
-        offset: 0
-      }, () => this.getSongsXhr())
-    }
-
-  }*/
 
   getSongsXhr() {
+    const searchParams = new URLSearchParams(this.props.location.search);
+    const searchTarget = searchParams.get('search') ? 'q' : 'tags';
+    // console.info(searchParams);
+
+
     const genre = this.props.match.params.genre;
-    xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+
+// console.info(this.props);
+
 
     xhr.open('get', `https://api.soundcloud.com/tracks?client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=${this.state.limit}&offset=${this.state.offset}&tags=${genre}`);
     // ?client_id=e582b63d83a5fb2997d1dbf2f62705da
@@ -59,7 +57,7 @@ export default class Explore extends React.Component {
   SongsHandler() {
     return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongCreator
       data={this.state.songs[i]}
-      from={'Explore'} />
+      from={'Explore'}/>
     </li>)
   }
 
@@ -152,14 +150,14 @@ export default class Explore extends React.Component {
         <h2 className="explore-title-genres">Genres</h2>
         {this.ListOfSongsCreator()}
         <div className="pagenumber">
-
-
-          <button className="prebtn pagenumberbtn" onClick={ this.prevPage.bind(this)}
+          <button className="prebtn pagenumberbtn"
+                  onClick={ this.prevPage.bind(this)}
                   disabled={this.state.offset === 0}>Prev
           </button>
           <span className="current-page-number">page {(this.state.offset / this.state.limit ) + 1}</span>
 
           <button className="nextbtn pagenumberbtn" onClick={ this.nextPage.bind(this)}>Next</button>
+
         </div>
 
       </div>

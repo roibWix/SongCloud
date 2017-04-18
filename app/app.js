@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Routes from './components/routes/Routes'
 require('smoothscroll-polyfill').polyfill();
+require('url-search-params')
 import store from './store';
 import Provider from "react-redux/src/components/Provider";
 
