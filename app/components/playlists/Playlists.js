@@ -1,4 +1,5 @@
 import './playlists.scss';
+import uuid from 'uuid';
 import React from 'react';
 import {connect} from 'react-redux';
 import PlayList from '../playlist/PlayList';
@@ -12,27 +13,13 @@ class Playlists extends React.Component {
     };
 
 
-    this.headerScroller = this.headerScroller.bind(this)
+    this.headerScroller = this.headerScroller.bind(this);
+    this.addNewListHandler = this.addNewListHandler.bind(this);
   }
 
   componentDidMount() {
 
 
-
-
-
-    this.getXhr()
-  }
-
-  getXhr() {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:3000/playlists`);
-
-    xhr.addEventListener('load', () => {
-      const playList = JSON.parse(xhr.responseText);
-      this.props.updatePlaylistsFromServer(playList);
-    });
-    xhr.send()
   }
 
 
@@ -45,13 +32,11 @@ class Playlists extends React.Component {
     if (this.state.scrollTo !== null) {
       this.setState({scrollTo: null});
     }
-    // console.info('did update',this);
   }
 
   listBuilderInBar() {
     const playLists = this.props.playLists;
     return playLists.map((list, i) => {
-      // console.info('in bar',i);
       return <li onClick={() => this.headerScroller(list.listid)}
                  onBlur={() => this.headerScroller(null)}
                  className="playlist-bar-list"
@@ -74,13 +59,45 @@ class Playlists extends React.Component {
     })
   }
 
+  addNewListHandler() {
+    this.XhrNewList();
+    this.props.addNewListToStore()
+  }
+  XhrNewList() {
+    let newuuid = uuid();
+    let playlist = {
+      listid: newuuid,
+      listTitle: 'Untitled',
+      songs: [{
+        id: 250711755,
+        title: "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
+        duration: 219082,
+        stream_url: "https://api.soundcloud.com/tracks/250711755/stream",
+        uri: "https://api.soundcloud.com/tracks/250711755",
+        artwork_url: "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
+      }]
+    };
+
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('post', 'http://localhost:3000/Playlists');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener("load", ()=>
+    console.info('done')
+    );
+    xhr.send(JSON.stringify(playlist))
+  }
+
+
+
 
   render() {
+
     return (
       <div className="playlists">
         <div className="playlist-bar">
           <div className="playlist-bar-top">
-            <button className="pagenumberbtn add-list-btn" onClick={() => this.props.addNewListHandler() }>Add new
+            <button className="pagenumberbtn add-list-btn" onClick={() => this.addNewListHandler() }>Add new
               playlist
             </button>
           </div>
@@ -104,15 +121,13 @@ class Playlists extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addNewListHandler() {
+    addNewListToStore() {
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
       dispatch({
         type: 'ADD-NEW-PLAYLIST'
       });
-    },
-    updatePlaylistsFromServer(data) {
-      dispatch({type: 'PLAYLISTS-FROM-SERVER', data: data})
     }
+
   }
 }
 

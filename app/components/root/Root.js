@@ -9,17 +9,29 @@ import Player from '../player/Player'
 import Playlists from '../playlists/Playlists'
 import Topbar from '../topbar/Topbar'
 import React from 'react';
+import {connect} from 'react-redux';
 
 
-export default class Root extends React.Component {
+class Root extends React.Component {
   constructor() {
     super();
   }
 
   componentDidMount() {
-    console.info('fuck');
+    this.getXhr();
   }
 
+
+
+  getXhr() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `http://localhost:3000/`);
+    xhr.addEventListener('load', () => {
+      const playList = JSON.parse(xhr.responseText);
+      this.props.updatePlaylistsFromServer(playList);
+    });
+    xhr.send()
+  }
 
 
 
@@ -45,4 +57,13 @@ export default class Root extends React.Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    updatePlaylistsFromServer(data) {
+      dispatch({type: 'PLAYLISTS-FROM-SERVER', data: data})
+    }
+  }
+}
 
+
+export default connect(null, mapDispatchToProps)(Root)

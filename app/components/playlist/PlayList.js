@@ -52,9 +52,23 @@ class PlayListsCom extends React.Component {
 
 
   handleSubmit(event) {
+    event.preventDefault();
+    this.SubmitXHRToServer(this.props.i,this.state.value);
+
+
+
     this.props.SubmitHandlerToStore(this.props.i, this.state.value);
     this.setState({mode: 'title'});
-    event.preventDefault();
+
+  }
+  SubmitXHRToServer(indexOfList, newTitleValue) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('post', 'http://localhost:3000/ChangeTitleName');
+    xhr.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
+    xhr.addEventListener("load", ()=>
+      console.info('done')
+    );
+    xhr.send(JSON.stringify(indexOfList));
   }
 
   render() {

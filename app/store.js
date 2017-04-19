@@ -12,7 +12,7 @@ const reducers = combineReducers({
 
 });
 
-
+console.info('actived');
 const store = createStore(reducers);
 
 export default store;
