@@ -18,6 +18,7 @@ class PlayListsCom extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteListHandler = this.deleteListHandler.bind(this);
   }
 
   componentDidMount() {
@@ -53,29 +54,61 @@ class PlayListsCom extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.SubmitXHRToServer(this.props.i,this.state.value);
-
+    this.SubmitXHRToServer(this.props.i, this.state.value);
 
 
     this.props.SubmitHandlerToStore(this.props.i, this.state.value);
     this.setState({mode: 'title'});
 
   }
+
   SubmitXHRToServer(indexOfList, newTitleValue) {
     const xhr = new XMLHttpRequest();
     xhr.open('post', 'http://localhost:3000/ChangeTitleName');
-    xhr.setRequestHeader('Content-Type', 'text/plain;charset=UTF-8');
-    xhr.addEventListener("load", ()=>
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener("load", () =>
       console.info('done')
     );
-    xhr.send(JSON.stringify(indexOfList));
+    let data = {
+      indexOfList: indexOfList,
+      newTitleValue: newTitleValue
+    };
+    xhr.send(JSON.stringify(data));
+  }
+
+
+  deleteListHandler(List, indexOfList) {
+
+
+    const data = {indexOfList};
+
+    let title = List.listTitle;
+    const isSure = confirm(`Deleting ${title} playlist. Are you sure?`);
+
+
+    if (isSure === true) {
+      this.deleteListFromServer(data);
+      this.props.deleteListFromStore(indexOfList)
+    }
+
+  }
+
+  deleteListFromServer(data) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('post', 'http://localhost:3000/DeleteList');
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.addEventListener("load", () =>
+      console.info('done')
+    );
+    xhr.send(JSON.stringify(data));
   }
 
   render() {
     return (
 
       <ul className="playlist">
-
         <li>
           <form onSubmit={this.handleSubmit}>
             <div className="for-hover">
@@ -85,10 +118,9 @@ class PlayListsCom extends React.Component {
                 <div className="counter-bg">
                   <span className="counter"> {this.props.list.songs.length}</span>
                 </div>
-
               </label>}
               <button className="delete-btn" type="button"
-                      onClick={() => this.props.deleteListHandler(this.props.list, this.props.i)}>Delete
+                      onClick={() => this.deleteListHandler(this.props.list, this.props.i)}>Delete
               </button>
             </div>
             {(this.state.mode === 'input') &&
@@ -120,12 +152,9 @@ function mapDispatchToProps(dispatch) {
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
     },
 
-    deleteListHandler(list, index) {
-      let title = list.listTitle;
-      const isSure = confirm(`Deleting ${title} playlist. Are you sure?`);
-      if (isSure === true) {
-        dispatch({type: 'DELETE-LIST', index: index});
-      }
+    deleteListFromStore(index) {
+      dispatch({type: 'DELETE-LIST', index: index});
+
     }
   }
 }

@@ -77,18 +77,14 @@ export default function playListsReducer(playlists = [], action) {
 
       return copyOfPlayLists;
 
-
     case 'UPDATE-LIST':
 
-      // let copyOfPlayLists = [...playlists];
       copyOfPlayLists[action.index].listTitle = action.newTitleName;
       return copyOfPlayLists;
 
     case 'DELETE-LIST':
 
-
       copyOfPlayLists.splice(action.index, 1);
-      // console.info(copyOfPlayLists);
       return copyOfPlayLists;
 
 

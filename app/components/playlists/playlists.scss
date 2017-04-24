@@ -7,7 +7,7 @@ playlists
 .playlists {
 
   display: flex;
-  height: 1000px;
+  height: 100%;
 
   .playlist-bar {
     width: 19.5%;
@@ -69,6 +69,16 @@ playlists
   .playlists-main {
     width: 80.5%;
     display: block;
+    height: 100%;
+    outline: 1px solid blue;
+    .why-dont-have-songs {
+      font-family: Roboto-Light;
+      font-size: 22px;
+      color: #000000;
+      //vertical-align: middle;
+      text-align: center;
+      height: 50vh;
+    }
   }
 
 }

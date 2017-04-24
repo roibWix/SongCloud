@@ -48,19 +48,26 @@ class Playlists extends React.Component {
 
   listBuilderInPlaylists() {
     const playLists = this.props.playLists;
-    return playLists.map((list, i) => {
-      return <PlayList
-        scrollTo={this.state.scrollTo}
-        key={i}
-        i={i}
-        list={list}
-        ref={(evt) => this.last = evt}
-      />
-    })
+    if (playLists.length === 0) {
+return <h2 className="why-dont-have-songs">Why don’t you create some nice playlist?</h2>
+    }
+    if (playLists.length > 0) {
+      return playLists.map((list, i) => {
+        return <PlayList
+          scrollTo={this.state.scrollTo}
+          key={i}
+          i={i}
+          list={list}
+          ref={(evt) => this.last = evt}
+        />
+      })
+    }
+
   }
 
   addNewListHandler() {
     this.XhrNewList();
+
     this.props.addNewListToStore()
   }
   XhrNewList() {
@@ -140,15 +147,4 @@ function mapStateToProps(stateData) {
 export default connect(mapStateToProps, mapDispatchToProps)(Playlists)
 
 
-/*
- <PlayList
- scrollTo={this.state.scrollTo}
- playLists={this.props.playLists}
- addedNewList={this.props.addedNewList && this.props.playLists.length - 1}
- key={i}
- i={i}
- list={list}
 
-
-
- />*/

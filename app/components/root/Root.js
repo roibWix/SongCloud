@@ -19,7 +19,11 @@ class Root extends React.Component {
 
   componentDidMount() {
     this.getXhr();
+
+
   }
+
+
 
 
 
