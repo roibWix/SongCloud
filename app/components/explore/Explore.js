@@ -24,26 +24,21 @@ export default class Explore extends React.Component {
 
 
   componentDidMount() {
-// console.info(this);
     this.getSongsXhr()
   }
-
-
 
 
   getSongsXhr() {
     const searchParams = new URLSearchParams(this.props.location.search);
     const searchTarget = searchParams.get('search') ? 'q' : 'tags';
-    // console.info(searchParams);
 
 
     const genre = this.props.match.params.genre;
     let xhr = new XMLHttpRequest();
 
-// console.info(this.props);
 
 
-    xhr.open('get', `https://api.soundcloud.com/tracks?client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=${this.state.limit}&offset=${this.state.offset}&tags=${genre}`);
+    xhr.open('get', `https://api.soundcloud.com/tracks?client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=${this.state.limit}&offset=${this.state.offset}&${searchTarget}=${genre}`);
     // ?client_id=e582b63d83a5fb2997d1dbf2f62705da
     xhr.addEventListener('load', () => {
       this.setState({songs: JSON.parse(xhr.responseText), songsLoadingState: 'loaded'});
@@ -143,12 +138,11 @@ export default class Explore extends React.Component {
           <li className="category">
             <NavLink activeClassName="my-selected-category" to="/Explore/dubstep">dubstep</NavLink>
           </li>
-
         </ul>
 
-
         <h2 className="explore-title-genres">Genres</h2>
-        {this.ListOfSongsCreator()}
+        {this.ListOfSongsCreator()  }
+
         <div className="pagenumber">
           <button className="prebtn pagenumberbtn"
                   onClick={ this.prevPage.bind(this)}

@@ -27,16 +27,22 @@ class Player extends React.Component {
     }
 
 
+    if (this.props.currentTrack) {
+      this.playerElm.classList.add('song-loaded')
+
+    }
+
+
+
+
   }
 
   onPlay() {
-    // console.info('is playing');
     const playing = true;
     this.props.updatePlayerModeInStore(playing)
   }
 
   onPause() {
-    // console.info('pause');
     const pause = false;
     this.props.updatePlayerModeInStore(pause)
   }
@@ -48,7 +54,7 @@ class Player extends React.Component {
     let songTitle = this.props.currentTrack.title ? this.props.currentTrack.title.slice(0, 35) + '...' : null;
     return (
 
-      <footer className="Player">
+      <footer className="Player" ref={(elm) => this.playerElm = elm}>
         <div className="image-in-player" style={{backgroundImage: `url(${songImage})`}}/>
         <span>{songTitle}</span>
         <audio className="playerElm" controls src={songUrl} autoPlay ref={(elm) => this.player = elm}

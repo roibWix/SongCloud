@@ -1,18 +1,19 @@
 @import 'assets/styles/colors';
 
-
-
 .playlist {
   position: relative;
-
   list-style: none;
-
+  //display: flex;
+  //flex-wrap: wrap;
+  //flex-wrap: wrap;
 
   .scroll-to {
     position: absolute;
     top: -5rem;
     left: 0;
+
   }
+
 
   form {
 
@@ -49,19 +50,17 @@
         //margin: 22px 18px;
 
         overflow: hidden;
-      /*
+        /*
 
-        //margin-right: 18px;
-        margin: 22px 18px;
-        border: none;
-        font-size: 0.81rem;
-        position: relative;
-        overflow: hidden;*/
-
-
+          //margin-right: 18px;
+          margin: 22px 18px;
+          border: none;
+          font-size: 0.81rem;
+          position: relative;
+          overflow: hidden;*/
 
       }
-      .delete-list-btn:after{
+      .delete-list-btn:after {
         content: '';
         position: absolute;
         top: 50%;
@@ -125,7 +124,25 @@
       padding-left: 25px;
     }
   }
+  .empty-list {
+    display: block;
+    height: 182px;
+    width: 95.9%;
+    line-height: 6;
+    //outline: 1px blue solid;
+    text-align: center;
 
+  }
+  .list-of-songs {
+    display: flex;
+    //outline: 1px blue solid;
+    width: 90.5%;
+    //max-width: 900px;
+    //max-width: 900px;
+    justify-content: flex-start;
+    //flex-direction: row;
+    flex-wrap: wrap;
+  }
 
 }
 

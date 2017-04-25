@@ -23,8 +23,12 @@ class Root extends React.Component {
 
   }
 
+  componentDidUpdate() {
+    if (this.props.currentTrack.id !== undefined) {
+      this.main.classList.add('main-with-player')
+    }
 
-
+  }
 
 
   getXhr() {
@@ -38,12 +42,11 @@ class Root extends React.Component {
   }
 
 
-
   render() {
     return (
       <div>
-        <Topbar history={this.props.history} />
-        <main>
+        <Topbar history={this.props.history}/>
+        <main ref={(elm) => this.main = elm} className="main-element">
           <Switch>
             <Route exact path="/" component={() => {
               return <Redirect to="/explore"/>
@@ -69,5 +72,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function mapStateToProps(stateData) {
+  return {
+    currentTrack: stateData.currentTrackReducer
 
-export default connect(null, mapDispatchToProps)(Root)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root)

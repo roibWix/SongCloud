@@ -13,12 +13,23 @@ body {
 
 }
 
-body {
-  padding-top: 64px;
-  padding-bottom: 60px;
-}
 
 body > div {
+
+  height: 100%;
   width: 100%;
-  padding-bottom: 64px;
 }
+body > div > div {
+  height: 100%;
+  width: 100%;
+}
+
+
+.main-with-player {
+  margin-bottom: 60px;
+
+}
+.main-element {
+  min-height: calc(100% - 125px);
+}
+

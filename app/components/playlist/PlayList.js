@@ -105,67 +105,81 @@ class PlayListsCom extends React.Component {
     xhr.send(JSON.stringify(data));
   }
 
-  render() {
-    return (
+  listOfSongs() {
+    // console.info(this.props.list.songs.length);
 
-      <ul className="playlist">
-        <li>
-          <form onSubmit={this.handleSubmit}>
-            <div className="for-hover">
-              {(this.state.mode === 'title') &&
-              <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
-                {this.props.list.listTitle}
-                <div className="counter-bg">
-                  <span className="counter"> {this.props.list.songs.length}</span>
-                </div>
-              </label>}
-              <button className="delete-btn" type="button"
-                      onClick={() => this.deleteListHandler(this.props.list, this.props.i)}>Delete
-              </button>
-            </div>
-            {(this.state.mode === 'input') &&
-            <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
-                   ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
-
-          </form>
-        </li>
-        <li ref={(evt) => this.playList = evt} className="scroll-to"/>
-
-        {this.props.list.songs.map((song, i) => {
-          return <li key={song.id} className="song-card"><SongsCreator
-            from={'Playlists'}
-            list={this.props.list}
-            data={song}/>
-          </li>
-        })}
-      </ul>
-    )
-  }
+    if (this.props.list.songs.length === 0) {
+      return <li key={this} className="empty-list">Add some songs to this playlist.</li>
 }
 
+    return  this.props.list.songs.map((song, i) => {
+      return <li key={song.id} className="song-card"><SongsCreator
+      from={'Playlists'}
+      list={this.props.list}
+      data={song}/>
+      </li>
+    })
+    }
 
-function mapDispatchToProps(dispatch) {
-  return {
+    render() {
+      return (
 
-    SubmitHandlerToStore(index, newTitleName) {
+      <ul className="playlist">
+      <li>
+      <form onSubmit={this.handleSubmit}>
+      <div className="for-hover">
+      {(this.state.mode === 'title') &&
+      <label className="playlist-title" onClick={() => this.toggleHandler()} ref={(evt) => this.Label = evt}>
+        {this.props.list.listTitle}
+        <div className="counter-bg">
+          <span className="counter"> {this.props.list.songs.length}</span>
+        </div>
+      </label>}
+      <button className="delete-btn" type="button"
+      onClick={() => this.deleteListHandler(this.props.list, this.props.i)}>Delete
+      </button>
+      </div>
+      {(this.state.mode === 'input') &&
+      <input type="text" value={this.state.value} onChange={this.handleChange} className="playlist-title"
+             ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
+
+      </form>
+      </li>
+      <li ref={(evt) => this.playList = evt} className="scroll-to"/>
+<li>
+  <ul className="list-of-songs">
+    {this.listOfSongs()}
+  </ul>
+</li>
+
+      </ul>
+      )
+    }
+    }
+
+
+    function mapDispatchToProps(dispatch) {
+      return {
+
+      SubmitHandlerToStore(index, newTitleName) {
       dispatch({type: 'UPDATE-LIST', index: index, newTitleName: newTitleName});
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: false});
     },
 
-    deleteListFromStore(index) {
+      deleteListFromStore(index) {
       dispatch({type: 'DELETE-LIST', index: index});
 
     }
-  }
-}
+    }
+    }
 
 
-function mapStateToProps(stateData) {
-  return {
-    playLists: stateData.playListReducer,
-    addedNewList: stateData.addedNewPlayListReducer
-  }
-}
+    function mapStateToProps(stateData) {
+      return {
+      playLists: stateData.playListReducer,
+      addedNewList: stateData.addedNewPlayListReducer
+    }
+    }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayListsCom)
+    export default connect(mapStateToProps, mapDispatchToProps)(PlayListsCom)

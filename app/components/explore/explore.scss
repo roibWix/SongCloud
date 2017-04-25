@@ -1,6 +1,8 @@
 @import 'assets/styles/colors';
 
 .explore {
+  height: 100%;
+  margin-top: 40px;
 
   .categories-container {
     height: 40px;
@@ -56,7 +58,8 @@
     margin-left: 15px;
     font-size: 23px;
     color: #000000;
-    padding-top: 40px;
+    //padding-top: 40px;
+    padding-top: 15px;
   }
   .songs-container {
     display: flex;

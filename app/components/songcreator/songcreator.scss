@@ -4,6 +4,7 @@
 .songs-creator {
 
   .img-song {
+
     position: relative;
     width: 200px;
     height: 85px;
@@ -12,6 +13,7 @@
     background-size: cover;
     margin: 10px 10px 10px 10px;
     display: block;
+
     .img-song-player-mode > span {
       background-color: rgba(0, 0, 0,0);
        position: absolute;
@@ -181,6 +183,7 @@
   font-family: Roboto-Regular;
   color: #4A4A4A;
   margin: 20px;
+
 }
 
 

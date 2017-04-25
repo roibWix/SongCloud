@@ -14,7 +14,6 @@ class SongsCreator extends React.Component {
       checker: false
     };
 
-    // this.CreateAddListToStore = this.CreateAddListToStore.bind(this)
     this.checkHandler = this.checkHandler.bind(this);
     this.DropDownModeHandler = this.DropDownModeHandler.bind(this);
     this.handler = this.handler.bind(this);
