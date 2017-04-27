@@ -1,6 +1,7 @@
 import './playlist.scss'
 import React from 'react'
 import SongsCreator from '../songcreator/SongCreator'
+import {serverLocation} from '../../serverLocation';
 import {connect} from 'react-redux';
 
 
@@ -14,13 +15,13 @@ class PlayListsCom extends React.Component {
     };
 
     this.inputHandlerChange = this.inputHandlerChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
     this.deleteListHandler = this.deleteListHandler.bind(this);
   }
 
   componentDidMount() {
-    let storeDataAddedNewPlayList = this.props.addedNewList;
-    if (storeDataAddedNewPlayList === true) {
+    let addedNewPlayList = this.props.addedNewList;
+    if (addedNewPlayList === true) {
       this.setState({mode: 'input'});
     }
     this.setState({value: this.props.list.listTitle});
@@ -43,23 +44,26 @@ class PlayListsCom extends React.Component {
     this.setState({mode: 'input'});
   }
 
-  handleSubmit(event) {
+  submitHandler(event) {
     event.preventDefault();
-
     let indexOfList = this.props.i;
-
-    this.SubmitXHRToServer(indexOfList, this.state.value);
-    this.props.SubmitHandlerToStore(indexOfList, this.state.value);
+    let newTitleName = this.state.value;
+    if (this.state.value.length === 0) {
+      newTitleName = 'Untitled';
+    }
+    this.SubmitXHRToServer(indexOfList, newTitleName);
     this.setState({mode: 'title'});
   }
 
   SubmitXHRToServer(indexOfList, newTitleValue) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/ChangeTitleName');
+    xhr.open('post', `${serverLocation}/ChangeTitleName`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", () =>
-      console.info('done')
+      this.props.SubmitHandlerToStore(indexOfList, newTitleValue)
     );
+    xhr.addEventListener("error", () => {console.info('error')});
+
     let data = {
       indexOfList: indexOfList,
       newTitleValue: newTitleValue
@@ -68,23 +72,23 @@ class PlayListsCom extends React.Component {
   }
 
 
-  deleteListHandler(List, indexOfList) {
+  deleteListHandler(list, indexOfList) {
 
     const data = {indexOfList};
-    let title = List.listTitle;
+    let title = list.listTitle;
     const isSure = confirm(`Deleting ${title} playlist. Are you sure?`);
     if (isSure === true) {
       this.deleteListFromServer(data);
-      this.props.deleteListFromStore(indexOfList)
+      this.props.deleteListFromStore(indexOfList);
     }
   }
 
   deleteListFromServer(data) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/DeleteList');
+    xhr.open('post', `${serverLocation}/DeleteList`);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener("load", () => {
-    });
+    xhr.addEventListener("load", () => {});
+    xhr.addEventListener("error", () => {console.info('error')});
     xhr.send(JSON.stringify(data));
   }
 
@@ -108,13 +112,13 @@ class PlayListsCom extends React.Component {
 
       <ul className="playlist">
         <li>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.submitHandler}>
             <div className="form-container">
               {(this.state.mode === 'title') &&
               <label className="playlist-title" onClick={() => this.toggleInputModeHandler()}>
                 {this.props.list.listTitle}
-                <div className="counter-bg">
-                  <span className="counter"> {this.props.list.songs.length}</span>
+                <div className="songs-counter-in-playlist-bg">
+                  <span className="songs-counter-in-playlist"> {this.props.list.songs.length}</span>
                 </div>
               </label>}
               <button className="delete-btn" type="button"
@@ -123,7 +127,7 @@ class PlayListsCom extends React.Component {
             </div>
             {(this.state.mode === 'input') &&
             <input type="text" value={this.state.value} onChange={this.inputHandlerChange} className="playlist-title"
-                   ref={(evt) => this.input = evt} onBlur={this.handleSubmit}/>}
+                   ref={(evt) => this.input = evt} onBlur={this.submitHandler}/>}
 
           </form>
         </li>

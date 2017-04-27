@@ -1,4 +1,5 @@
 import './playlists.scss';
+import {serverLocation} from '../../serverLocation';
 import uuid from 'uuid';
 import React from 'react';
 import {connect} from 'react-redux';
@@ -67,7 +68,7 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
   addNewListHandler() {
     this.XhrNewList();
 
-    this.props.addNewListToStore()
+
   }
   XhrNewList() {
     let newuuid = uuid();
@@ -85,13 +86,14 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
     };
 
     const xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/Playlists');
+    xhr.open('post', `${serverLocation}/addNewList`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", ()=>
-    console.info('done')
+      this.props.addNewListToStore()
     );
     xhr.send(JSON.stringify(playlist))
   }
+
 
 
 
@@ -100,6 +102,8 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
 
     return (
       <div className="playlists">
+
+
         <div className="playlist-sidebar">
           <div className="playlist-sidebar-top">
             <button className="pagenumberbtn add-list-btn" onClick={() => this.addNewListHandler() }>Add new

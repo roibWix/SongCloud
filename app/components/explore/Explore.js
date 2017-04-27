@@ -3,6 +3,7 @@ import './explore.scss';
 import React from 'react';
 import SongCreator from '../songcreator/SongCreator'
 import {NavLink} from 'react-router-dom';
+// import {setSong} from '../root/Root'
 
 
 export default class Explore extends React.Component {
@@ -12,8 +13,7 @@ export default class Explore extends React.Component {
       exploreLoadingState: 'loading',
       songs: [],
       offset: 0,
-      limit: 15,
-      pageNumber: 1
+      limit: 15
     }
   }
 

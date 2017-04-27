@@ -1,4 +1,5 @@
 import './songcreator.scss';
+import {serverLocation} from '../../serverLocation';
 // import store from '../../store'
 
 import React from 'react'
@@ -25,7 +26,6 @@ class SongsCreator extends React.Component {
 
   componentDidMount() {
     this.heartHandler()
-
 
 
   }
@@ -70,10 +70,10 @@ class SongsCreator extends React.Component {
 
   checkHandlerToServer(data) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/CheckHandler');
+    xhr.open('post', `${serverLocation}/CheckHandler`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", () =>
-    console.info('done'));
+      console.info('done'));
     xhr.send(JSON.stringify(data));
   }
 
@@ -114,11 +114,10 @@ class SongsCreator extends React.Component {
 
   CreateAddListWithSongToServer(data) {
     const xhr = new XMLHttpRequest();
-    xhr.open('post', 'http://localhost:3000/AddNewListWithSong');
+    xhr.open('post', `${serverLocation}/AddNewListWithSong`);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener("load", () =>
-      console.info('done')
-    );
+    xhr.addEventListener("load", () => {
+    });
 
     xhr.send(JSON.stringify(data));
   }
@@ -131,8 +130,6 @@ class SongsCreator extends React.Component {
       }} onClick={() => this.CreateAddListHandler(this.props.data) }
                     className="song-drop-down-add-to-btn">Create playlist +</Link>)
     }
-
-
   }
 
   DropDownModeHandler() {
@@ -164,30 +161,49 @@ class SongsCreator extends React.Component {
 
   updateSongInPlayerHandler(data) {
 
+    if (this.props.currentTrack.id === this.props.data.id) {
+      if (this.props.playerModeReducer === true) {
+        const pause = false;
+        this.props.updatePlayerModeInStore(pause);
+      }
+      if (this.props.playerModeReducer === false) {
+        const play = true;
+        this.props.updatePlayerModeInStore(play);
+      }
 
-    if ((this.props.playerModeReducer.playing === 'false') || (this.props.currentTrack !== this.props.data)) {
+    }
+
+    if (this.props.currentTrack.id !== this.props.data.id) {
+      const play = true;
+      this.props.updatePlayerModeInStore(play);
+      this.props.updateSongInPlayer(data);
+    }
+
+
+/*    if ((this.props.playerModeReducer === false) || (this.props.currentTrack !== this.props.data)) {
       const playing = true;
       this.props.updatePlayerModeInStore(playing);
       this.props.updateSongInPlayer(data);
     }
 
-    if ((this.props.playerModeReducer.playing === 'true') || (this.props.currentTrack === this.props.data)) {
+    if ((this.props.playerModeReducer === true) || (this.props.currentTrack.id === this.props.data.id)) {
       const notplaying = false;
       this.props.updatePlayerModeInStore(notplaying)
     }
 
-    if ((this.props.playerModeReducer === false) && (this.props.currentTrack === this.props.data)) {
+    if ((this.props.playerModeReducer === true) && (this.props.currentTrack.id !== this.props.data.id)) {
       const playing = true;
       this.props.updatePlayerModeInStore(playing)
     }
 
+
+    if ((this.props.playerModeReducer === false) && (this.props.currentTrack.id === this.props.data.id)) {
+      const playing = true;
+      this.props.updatePlayerModeInStore(playing)
+    }*/
+
   }
 
-  togglePlayingModeView() {
-    this.icon.classList.toggle("fa-play-circle-o");
-    this.icon.classList.toggle("fa-pause-circle-o");
-    this.icon.classList.toggle("isplaying");
-  }
 
   componentDidUpdate(prevProps, prevState) {
 
@@ -204,30 +220,6 @@ class SongsCreator extends React.Component {
 
       this.heartHandler()
     }
-// if happens any change in heart condition and this song is playing keep the icon on playing mode
-/*    if (((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false) || ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true))) && (this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) {
-      this.icon.classList.remove("fa-play-circle-o");
-      this.icon.classList.add("fa-pause-circle-o");
-      this.icon.classList.add("isplaying");
-    }*/
-
-
-
-
-/*    // if this song is in the player and it's playing change the icon to pause
-    if ((this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) {
-      this.togglePlayingModeView()
-    }
-    // if this song is in the player and it's in pause mode change the icon to play
-    if ((this.props.playerModeReducer === false) && (this.props.currentTrack === this.props.data)) {
-      this.togglePlayingModeView()
-    }
-
-    // if song changed in player change icon to default mode
-    if ((prevProps.currentTrack === this.props.data) && (this.props.currentTrack !== this.props.data)) {
-      this.togglePlayingModeView()
-    }*/
-
 
   }
 
@@ -239,7 +231,7 @@ class SongsCreator extends React.Component {
     const seconds = ((parseInt(this.props.data.duration % 60000) / 1000).toFixed(0));
     const songDuration = (seconds === 60 ? (minutes + 1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
 
-    const playMode = ((this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) ? "fa fa-pause-circle-o isplaying" : "fa fa-play-circle-o";
+    const playMode = ((this.props.playerModeReducer === true) && (this.props.currentTrack.id === this.props.data.id)) ? "fa fa-pause-circle-o isplaying" : "fa fa-play-circle-o";
 
 
     return (
@@ -249,9 +241,7 @@ class SongsCreator extends React.Component {
           backgroundImage: `url(${songImage})`
         }} onClick={() => this.updateSongInPlayerHandler(this.props.data)}>
           <div className="img-song-player-mode">
-            <span ref={(elm) => {
-            this.icon = elm
-          }} className={playMode} aria-hidden="true"/>
+            <span className={playMode} aria-hidden="true"/>
           </div>
         </div>
 
@@ -308,4 +298,3 @@ function mapStateToProps(stateData) {
 export default connect(mapStateToProps, mapDispatchToProps)(SongsCreator)
 
 
-// <span>{this.playingModeCharHandler()}</span>

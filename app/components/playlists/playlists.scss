@@ -10,8 +10,9 @@ playlists
   min-height: calc(100vh - 125px);
   .playlist-sidebar {
     position: fixed;
-    top:0;
+    top:64px;
     left:0;
+    height: calc(100vh - 64px);
 
     width: 19.5%;
     display: block;
@@ -70,7 +71,8 @@ playlists
 
 
   .playlists-main {
-    margin: 0 19.5%;
+    margin-left:auto ;
+    //margin: 0 19.5%;
     //float: right;
     width: 80.5%;
     //width: 100%;

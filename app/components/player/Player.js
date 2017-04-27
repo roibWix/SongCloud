@@ -46,6 +46,7 @@ class Player extends React.Component {
       <footer className="Player" ref={(elm) => this.playerElm = elm}>
         <div className="image-in-player" style={{backgroundImage: `url(${songImage})`}}/>
         <span>{songTitle}</span>
+
         <audio className="playerElm" controls src={songUrl} autoPlay ref={(elm) => this.player = elm}
                onPlay={this.onPlay} onPause={this.onPause}/>
       </footer>

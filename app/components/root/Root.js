@@ -3,6 +3,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import {serverLocation} from '../../serverLocation';
 import Explore from '../explore/Explore'
 import Player from '../player/Player'
 import Playlists from '../playlists/Playlists'
@@ -29,7 +30,7 @@ class Root extends React.Component {
 
   getPlaylistsFromServerXhr() {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', `http://localhost:3000/`);
+    xhr.open('GET', `${serverLocation}/list`);
     xhr.addEventListener('load', () => {
       const playList = JSON.parse(xhr.responseText);
       this.props.updateLocalStorePlaylistsFromServer(playList);
