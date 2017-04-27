@@ -180,28 +180,6 @@ class SongsCreator extends React.Component {
     }
 
 
-/*    if ((this.props.playerModeReducer === false) || (this.props.currentTrack !== this.props.data)) {
-      const playing = true;
-      this.props.updatePlayerModeInStore(playing);
-      this.props.updateSongInPlayer(data);
-    }
-
-    if ((this.props.playerModeReducer === true) || (this.props.currentTrack.id === this.props.data.id)) {
-      const notplaying = false;
-      this.props.updatePlayerModeInStore(notplaying)
-    }
-
-    if ((this.props.playerModeReducer === true) && (this.props.currentTrack.id !== this.props.data.id)) {
-      const playing = true;
-      this.props.updatePlayerModeInStore(playing)
-    }
-
-
-    if ((this.props.playerModeReducer === false) && (this.props.currentTrack.id === this.props.data.id)) {
-      const playing = true;
-      this.props.updatePlayerModeInStore(playing)
-    }*/
-
   }
 
 
@@ -241,7 +219,7 @@ class SongsCreator extends React.Component {
           backgroundImage: `url(${songImage})`
         }} onClick={() => this.updateSongInPlayerHandler(this.props.data)}>
           <div className="img-song-player-mode">
-            <span className={playMode} aria-hidden="true"/>
+            <span className={playMode}/>
           </div>
         </div>
 
@@ -251,7 +229,7 @@ class SongsCreator extends React.Component {
         <span className="song-duration">{songDuration}</span>
 
         <i className={this.state.class} onClick={() => this.heartClicker()}
-           aria-hidden="true"/>
+           />
 
         {this.DropDownBuilder()}
 

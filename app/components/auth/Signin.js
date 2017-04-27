@@ -61,7 +61,7 @@ console.info(this.elm);
     return (
 
       <div className="auth">
-        <i className="fa fa-mixcloud signup-logo" aria-hidden="true"/>
+        <i className="fa fa-mixcloud signup-logo" />
         <h2 className="sign-title">SongCloud</h2>
 
         <form className="sign-form" onSubmit={this.onSubmit}>

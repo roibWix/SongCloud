@@ -32,7 +32,7 @@ export default class Topbar extends React.Component {
           <ul className="topnavul">
             <li className={"topnavli mylogo"}>
               <NavLink className={"logos"} to="/Explore">
-                <i className="fa fa-mixcloud" aria-hidden="true"/>
+                <i className="fa fa-mixcloud" />
                 <span>SongCloud</span>
               </NavLink>
             </li>
