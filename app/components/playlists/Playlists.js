@@ -13,17 +13,16 @@ class Playlists extends React.Component {
     };
 
 
-    this.headerScroller = this.headerScroller.bind(this);
+    this.ScrollToList = this.ScrollToList.bind(this);
     this.addNewListHandler = this.addNewListHandler.bind(this);
   }
 
   componentDidMount() {
 
-
   }
 
 
-  headerScroller(listId) {
+  ScrollToList(listId) {
     this.setState({scrollTo: listId});
   }
 
@@ -37,8 +36,8 @@ class Playlists extends React.Component {
   listBuilderInBar() {
     const playLists = this.props.playLists;
     return playLists.map((list, i) => {
-      return <li onClick={() => this.headerScroller(list.listid)}
-                 onBlur={() => this.headerScroller(null)}
+      return <li onClick={() => this.ScrollToList(list.listid)}
+                 onBlur={() => this.ScrollToList(null)}
                  className="playlist-bar-list"
                  key={i}
                  ref={(evt) => this.Elm = evt}>{list.listTitle}</li>;
@@ -85,7 +84,6 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
       }]
     };
 
-
     const xhr = new XMLHttpRequest();
     xhr.open('post', 'http://localhost:3000/Playlists');
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -102,15 +100,15 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
 
     return (
       <div className="playlists">
-        <div className="playlist-bar">
-          <div className="playlist-bar-top">
+        <div className="playlist-sidebar">
+          <div className="playlist-sidebar-top">
             <button className="pagenumberbtn add-list-btn" onClick={() => this.addNewListHandler() }>Add new
               playlist
             </button>
           </div>
-          <div className="playlist-bar-separator"/>
-          <div className="playlist-bar-bottom">
-            <ul className="playlist-bar-lists">
+          <div className="playlist-sidebar-separator"/>
+          <div className="playlist-sidebar-bottom">
+            <ul className="playlist-sidebar-lists">
               {this.listBuilderInBar()}
             </ul>
           </div>
@@ -134,7 +132,6 @@ function mapDispatchToProps(dispatch) {
         type: 'ADD-NEW-PLAYLIST'
       });
     }
-
   }
 }
 

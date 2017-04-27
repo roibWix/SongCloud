@@ -17,9 +17,8 @@
 
   form {
 
-    .for-hover {
+    .form-container {
       position: relative;
-
       &:hover {
 
         .delete-btn {
@@ -118,7 +117,8 @@
       font-size: 22px;
       color: #000000;
       height: 4rem;
-      width: 91.92%;
+      //width: 91.92%;
+      width: 100%;
       display: flex;
       align-items: center;
       padding-left: 25px;

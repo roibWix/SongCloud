@@ -8,13 +8,17 @@ playlists
 
   display: flex;
   min-height: calc(100vh - 125px);
-  .playlist-bar {
+  .playlist-sidebar {
+    position: fixed;
+    top:0;
+    left:0;
+
     width: 19.5%;
     display: block;
     background: #FFFFFF;
     box-shadow: inset -1px 0 0 0 #D8D8D8;
 
-    .playlist-bar-top {
+    .playlist-sidebar-top {
       justify-content: center;
       display: flex;
 
@@ -31,17 +35,17 @@ playlists
       }
     }
 
-    .playlist-bar-separator {
+    .playlist-sidebar-separator {
       width: 180px;
       height: 1px;
       background: #D8D8D8;
       margin: 0 auto;
     }
 
-    .playlist-bar-bottom {
+    .playlist-sidebar-bottom {
 
 
-      .playlist-bar-lists {
+      .playlist-sidebar-lists {
         text-decoration: none;
         list-style-type: none;
         padding-left: 20px;
@@ -66,7 +70,10 @@ playlists
 
 
   .playlists-main {
+    margin: 0 19.5%;
+    //float: right;
     width: 80.5%;
+    //width: 100%;
     display: block;
     height: 100%;
     //outline: 1px solid blue;

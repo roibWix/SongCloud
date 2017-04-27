@@ -1,8 +1,24 @@
 @import 'assets/styles/colors';
 
+
+
+
+
 .explore {
   height: 100%;
   margin-top: 40px;
+  .no-songs-were-found-container {
+text-align: center;
+    .no-songs-were-found-msg {
+      font-family: Roboto-Light;
+      font-size: 22px;
+      color: #000000;
+      line-height: 10;
+
+    }
+  }
+
+
 
   .categories-container {
     height: 40px;

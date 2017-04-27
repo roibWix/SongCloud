@@ -11,18 +11,12 @@ class Player extends React.Component {
   }
 
 
-  componentDidMount() {
-
-  }
-
-
   componentDidUpdate(prevProps, prevState) {
 
-    if (this.props.playerReducer === false) {
+    if (this.props.playerModeReducer === false) {
       this.player.pause()
     }
-    if (this.props.playerReducer === true) {
-
+    if (this.props.playerModeReducer === true) {
       this.player.play()
     }
 
@@ -31,9 +25,6 @@ class Player extends React.Component {
       this.playerElm.classList.add('song-loaded')
 
     }
-
-
-
 
   }
 
@@ -48,12 +39,10 @@ class Player extends React.Component {
   }
 
   render() {
-
     let songUrl = this.props.currentTrack ? this.props.currentTrack.stream_url + '?client_id=e582b63d83a5fb2997d1dbf2f62705da' : null;
     let songImage = this.props.currentTrack ? this.props.currentTrack.artwork_url : null;
     let songTitle = this.props.currentTrack.title ? this.props.currentTrack.title.slice(0, 35) + '...' : null;
     return (
-
       <footer className="Player" ref={(elm) => this.playerElm = elm}>
         <div className="image-in-player" style={{backgroundImage: `url(${songImage})`}}/>
         <span>{songTitle}</span>
@@ -78,11 +67,10 @@ function mapDispatchToProps(dispatch) {
 }
 function mapStateToProps(stateData) {
   return {
-    playerReducer: stateData.playerReducer,
+    playerModeReducer: stateData.playerModeReducer,
     currentTrack: stateData.currentTrackReducer
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Player)
 
 

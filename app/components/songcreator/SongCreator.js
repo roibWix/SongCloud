@@ -27,6 +27,7 @@ class SongsCreator extends React.Component {
     this.heartHandler()
 
 
+
   }
 
 
@@ -72,8 +73,7 @@ class SongsCreator extends React.Component {
     xhr.open('post', 'http://localhost:3000/CheckHandler');
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", () =>
-      console.info('')
-    );
+    console.info('done'));
     xhr.send(JSON.stringify(data));
   }
 
@@ -107,7 +107,6 @@ class SongsCreator extends React.Component {
 
 
   CreateAddListHandler(data) {
-    // console.info(data);
 
     this.CreateAddListWithSongToServer(data);
     this.props.CreateAddListToStore(data)
@@ -166,18 +165,18 @@ class SongsCreator extends React.Component {
   updateSongInPlayerHandler(data) {
 
 
-    if ((this.props.playerReducer.playing === 'false') || (this.props.currentTrack !== this.props.data)) {
+    if ((this.props.playerModeReducer.playing === 'false') || (this.props.currentTrack !== this.props.data)) {
       const playing = true;
       this.props.updatePlayerModeInStore(playing);
       this.props.updateSongInPlayer(data);
     }
 
-    if ((this.props.playerReducer.playing === 'true') || (this.props.currentTrack === this.props.data)) {
+    if ((this.props.playerModeReducer.playing === 'true') || (this.props.currentTrack === this.props.data)) {
       const notplaying = false;
       this.props.updatePlayerModeInStore(notplaying)
     }
 
-    if ((this.props.playerReducer === false) && (this.props.currentTrack === this.props.data)) {
+    if ((this.props.playerModeReducer === false) && (this.props.currentTrack === this.props.data)) {
       const playing = true;
       this.props.updatePlayerModeInStore(playing)
     }
@@ -206,27 +205,28 @@ class SongsCreator extends React.Component {
       this.heartHandler()
     }
 // if happens any change in heart condition and this song is playing keep the icon on playing mode
-    if (((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false) || ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true))) && (this.props.playerReducer === true) && (this.props.currentTrack === this.props.data)) {
+/*    if (((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false) || ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true))) && (this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) {
       this.icon.classList.remove("fa-play-circle-o");
       this.icon.classList.add("fa-pause-circle-o");
       this.icon.classList.add("isplaying");
-    }
+    }*/
 
 
 
 
-    // if this song is in the player and it's playing change the icon to pause
-    if ((this.props.playerReducer === true) && (this.props.currentTrack === this.props.data)) {
+/*    // if this song is in the player and it's playing change the icon to pause
+    if ((this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) {
       this.togglePlayingModeView()
     }
     // if this song is in the player and it's in pause mode change the icon to play
-    if ((this.props.playerReducer === false) && (this.props.currentTrack === this.props.data)) {
+    if ((this.props.playerModeReducer === false) && (this.props.currentTrack === this.props.data)) {
       this.togglePlayingModeView()
     }
-    // if song changed in player change icon to defult mode
+
+    // if song changed in player change icon to default mode
     if ((prevProps.currentTrack === this.props.data) && (this.props.currentTrack !== this.props.data)) {
       this.togglePlayingModeView()
-    }
+    }*/
 
 
   }
@@ -239,6 +239,8 @@ class SongsCreator extends React.Component {
     const seconds = ((parseInt(this.props.data.duration % 60000) / 1000).toFixed(0));
     const songDuration = (seconds === 60 ? (minutes + 1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
 
+    const playMode = ((this.props.playerModeReducer === true) && (this.props.currentTrack === this.props.data)) ? "fa fa-pause-circle-o isplaying" : "fa fa-play-circle-o";
+
 
     return (
       <div className="songs-creator" ref={(song) => this.song = song}>
@@ -246,9 +248,11 @@ class SongsCreator extends React.Component {
         <div className="img-song" style={{
           backgroundImage: `url(${songImage})`
         }} onClick={() => this.updateSongInPlayerHandler(this.props.data)}>
-          <div className="img-song-player-mode"><span ref={(elm) => {
+          <div className="img-song-player-mode">
+            <span ref={(elm) => {
             this.icon = elm
-          }} className="fa fa-play-circle-o" aria-hidden="true"/></div>
+          }} className={playMode} aria-hidden="true"/>
+          </div>
         </div>
 
 
@@ -296,7 +300,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(stateData) {
   return {
     currentTrack: stateData.currentTrackReducer,
-    playerReducer: stateData.playerReducer,
+    playerModeReducer: stateData.playerModeReducer,
     playLists: stateData.playListReducer
   }
 }

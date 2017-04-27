@@ -3,53 +3,43 @@ import './explore.scss';
 import React from 'react';
 import SongCreator from '../songcreator/SongCreator'
 import {NavLink} from 'react-router-dom';
-import {setSong} from '../root/Root'
 
 
-// let xhr;
 export default class Explore extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      songsLoadingState: 'loading',
+      exploreLoadingState: 'loading',
       songs: [],
-      clinetID: '?client_id=e582b63d83a5fb2997d1dbf2f62705da',
-      genre: '',
       offset: 0,
       limit: 15,
       pageNumber: 1
-
     }
   }
 
-
   componentDidMount() {
-    this.getSongsXhr()
+    this.getSongsXhr();
   }
-
 
   getSongsXhr() {
     const searchParams = new URLSearchParams(this.props.location.search);
     const searchTarget = searchParams.get('search') ? 'q' : 'tags';
-
-
+    const clientID = 'e582b63d83a5fb2997d1dbf2f62705da';
     const genre = this.props.match.params.genre;
     let xhr = new XMLHttpRequest();
 
 
-
-    xhr.open('get', `https://api.soundcloud.com/tracks?client_id=e582b63d83a5fb2997d1dbf2f62705da&limit=${this.state.limit}&offset=${this.state.offset}&${searchTarget}=${genre}`);
-    // ?client_id=e582b63d83a5fb2997d1dbf2f62705da
+    xhr.open('get', `https://api.soundcloud.com/tracks?client_id=${clientID}&limit=${this.state.limit}&offset=${this.state.offset}&${searchTarget}=${genre}`);
     xhr.addEventListener('load', () => {
-      this.setState({songs: JSON.parse(xhr.responseText), songsLoadingState: 'loaded'});
+      this.setState({songs: JSON.parse(xhr.responseText), exploreLoadingState: 'loaded'})
     });
     xhr.addEventListener('error', () => {
-      this.setState({songsLoadingState: 'error'});
+      this.setState({exploreLoadingState: 'error'})
     });
     xhr.send();
   }
 
-  SongsHandler() {
+  SongsBuilder() {
     return this.state.songs.map((song, i) => <li key={song.id} className="song-card"><SongCreator
       data={this.state.songs[i]}
       from={'Explore'}/>
@@ -57,15 +47,19 @@ export default class Explore extends React.Component {
   }
 
   ListOfSongsCreator() {
+    if (this.state.songs.length === 0) {
+      return <div className="no-songs-were-found-container"><h2 className="no-songs-were-found-msg">No songs were found
+        for your search</h2></div>
+    }
     return <ul className="songs-container">
-      {this.SongsHandler()}
+      {this.SongsBuilder()}
     </ul>
+
   }
 
   componentDidUpdate(prevProps, prevState) {
     const prevGenre = prevProps.match.params.genre;
     const targetGenre = this.props.match.params.genre;
-
 
     if (prevGenre !== targetGenre) {
       this.setState({
@@ -92,10 +86,29 @@ export default class Explore extends React.Component {
     })
   }
 
+
+  paginationButtons() {
+    if (this.state.songs.length > 0) {
+
+      return <div className="pagenumber">
+        <button className="prebtn pagenumberbtn"
+                onClick={ this.prevPage.bind(this)}
+                disabled={this.state.offset === 0}>Prev
+        </button>
+        <span className="current-page-number">page {(this.state.offset / this.state.limit ) + 1}</span>
+        <button className="nextbtn pagenumberbtn" onClick={this.nextPage.bind(this)}>Next</button>
+      </div>
+    }
+
+
+  }
+
   render() {
-    switch (this.state.songsLoadingState) {
+    const SongsTitle = this.props.location.search.length ? 'Search:' : 'Genre:';
+
+    switch (this.state.exploreLoadingState) {
       case 'loading':
-        return <div><i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"/>
+        return <div className="loader"><i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw margin-bottom"/>
         </div>;
       case 'error':
         return <div>Error!</div>;
@@ -114,10 +127,10 @@ export default class Explore extends React.Component {
             <NavLink activeClassName="my-selected-category" to="/Explore/hiphoprap">hip hop rap</NavLink>
           </li>
 
-
           <li className="category">
             <NavLink activeClassName="my-selected-category" to="/Explore/house">house</NavLink>
           </li>
+
           <li className="category">
             <NavLink activeClassName="my-selected-category" to="/Explore/rock">rock</NavLink>
           </li>
@@ -134,29 +147,20 @@ export default class Explore extends React.Component {
             <NavLink activeClassName="my-selected-category" to="/Explore/trance">trance</NavLink>
           </li>
 
-
           <li className="category">
             <NavLink activeClassName="my-selected-category" to="/Explore/dubstep">dubstep</NavLink>
           </li>
         </ul>
 
-        <h2 className="explore-title-genres">Genres</h2>
-        {this.ListOfSongsCreator()  }
+        <h2 className="explore-title-genres">{SongsTitle} {this.props.match.params.genre}</h2>
 
-        <div className="pagenumber">
-          <button className="prebtn pagenumberbtn"
-                  onClick={ this.prevPage.bind(this)}
-                  disabled={this.state.offset === 0}>Prev
-          </button>
-          <span className="current-page-number">page {(this.state.offset / this.state.limit ) + 1}</span>
 
-          <button className="nextbtn pagenumberbtn" onClick={ this.nextPage.bind(this)}>Next</button>
+        {this.ListOfSongsCreator()}
 
-        </div>
+
+        {this.paginationButtons()}
 
       </div>
-
     )
   }
-
 }

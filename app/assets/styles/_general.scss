@@ -33,3 +33,11 @@ body > div > div {
   min-height: calc(100% - 125px);
 }
 
+.loader {
+  text-align: center;
+  height: 500px;
+}
+.loader i {
+  line-height: 10;
+}
+

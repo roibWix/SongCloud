@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Route,
   Switch,
   Redirect
@@ -16,27 +15,27 @@ class Root extends React.Component {
   constructor() {
     super();
   }
-
   componentDidMount() {
-    this.getXhr();
-
-
+    this.getPlaylistsFromServerXhr();
   }
 
   componentDidUpdate() {
+
     if (this.props.currentTrack.id !== undefined) {
       this.main.classList.add('main-with-player')
     }
-
   }
 
 
-  getXhr() {
+  getPlaylistsFromServerXhr() {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `http://localhost:3000/`);
     xhr.addEventListener('load', () => {
       const playList = JSON.parse(xhr.responseText);
-      this.props.updatePlaylistsFromServer(playList);
+      this.props.updateLocalStorePlaylistsFromServer(playList);
+    });
+    xhr.addEventListener( 'error', () => {
+      console.info('error');
     });
     xhr.send()
   }
@@ -66,7 +65,7 @@ class Root extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    updatePlaylistsFromServer(data) {
+    updateLocalStorePlaylistsFromServer(data) {
       dispatch({type: 'PLAYLISTS-FROM-SERVER', data: data})
     }
   }
@@ -75,8 +74,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(stateData) {
   return {
     currentTrack: stateData.currentTrackReducer
-
   }
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(Root)
