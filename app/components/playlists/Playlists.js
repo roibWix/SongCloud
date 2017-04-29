@@ -28,7 +28,7 @@ class Playlists extends React.Component {
   }
 
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (this.state.scrollTo !== null) {
       this.setState({scrollTo: null});
     }
@@ -66,6 +66,7 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
   }
 
   addNewListHandler() {
+    this.props.addNewListToStore();
     this.XhrNewList();
 
 
@@ -82,7 +83,7 @@ return <h2 className="why-dont-have-songs">Why don’t you create some nice play
     xhr.open('post', `${serverLocation}/addNewList`);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.addEventListener("load", ()=>
-      this.props.addNewListToStore()
+      {}
     );
     xhr.send(JSON.stringify(playlist))
   }

@@ -1,23 +1,20 @@
 import './songcreator.scss';
 import {serverLocation} from '../../serverLocation';
-// import store from '../../store'
-
 import React from 'react'
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 
+
 class SongsCreator extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
-      class: "fa fa-heart-o heart-font",
-      isDropDownOpen: false,
-      checker: false
+      heartClassName: "fa fa-heart-o heart-font",
+      isDropDownOpen: false
     };
 
-    this.checkHandler = this.checkHandler.bind(this);
+    this.addRemoveSongFromListHandler = this.addRemoveSongFromListHandler.bind(this);
     this.DropDownModeHandler = this.DropDownModeHandler.bind(this);
-    this.handler = this.handler.bind(this);
     this.DropDownBuilder = this.DropDownBuilder.bind(this);
     this.CreateAddListHandler = this.CreateAddListHandler.bind(this);
     this.updateSongInPlayerHandler = this.updateSongInPlayerHandler.bind(this);
@@ -25,20 +22,18 @@ class SongsCreator extends React.Component {
 
 
   componentDidMount() {
-    this.heartHandler()
-
-
+    this.heartViewHandler();
   }
 
 
-  heartHandler() {
+  heartViewHandler() {
     const storeDataPlayLists = this.props.playLists;
 
     storeDataPlayLists.map((list, i) => {
       list.songs.map((song) => {
         if (song.id === this.props.data.id) {
           return this.setState({
-            class: "fa fa-heart heart-font"
+            heartClassName: "fa fa-heart heart-font"
           })
         }
       });
@@ -48,37 +43,35 @@ class SongsCreator extends React.Component {
 
 
   heartClicker() {
-
     this.setState({isDropDownOpen: !this.state.isDropDownOpen});
-
-
   }
 
 
-  checkHandler(event) {
+  addRemoveSongFromListHandler(event) {
     let isItChecked = event.target.checked;
     let song = this.props.data;
     let indexOfList = event.target.id;
 
     let data = {isItChecked, song, indexOfList};
-    this.checkHandlerToServer(data);
-    this.props.checkHandlerToStore(isItChecked, song, indexOfList);
+    this.addRemoveSongFromListServerUpdate(data);
+    this.props.addRemoveSongFromListStoreUpdate(isItChecked, song, indexOfList);
 
 
   }
 
 
-  checkHandlerToServer(data) {
+  addRemoveSongFromListServerUpdate(data) {
     const xhr = new XMLHttpRequest();
     xhr.open('post', `${serverLocation}/CheckHandler`);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener("load", () =>
-      console.info('done'));
+    xhr.addEventListener("load", () => {
+    });
     xhr.send(JSON.stringify(data));
   }
 
 
   CheckBoxBuilder() {
+
     const storeDataPlayLists = this.props.playLists;
     // value of checkbox
     let checked = false;
@@ -97,7 +90,7 @@ class SongsCreator extends React.Component {
       return <label key={i} className="song-drop-down-label">
         <input type="checkbox"
                id={i}
-               onChange={this.checkHandler}
+               onChange={this.addRemoveSongFromListHandler}
                checked={ checked }/>
         {list.listTitle}
         <span className="indicator"/>
@@ -116,13 +109,12 @@ class SongsCreator extends React.Component {
     const xhr = new XMLHttpRequest();
     xhr.open('post', `${serverLocation}/AddNewListWithSong`);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener("load", () => {
-    });
+    xhr.addEventListener("load", () => {});
 
     xhr.send(JSON.stringify(data));
   }
 
-  CreateAddListElm() {
+  CreateAddListWithSongBtn() {
     if (this.props.from === 'Explore') {
 
       return (<Link to="/playlists" ref={(elm) => {
@@ -143,21 +135,20 @@ class SongsCreator extends React.Component {
     }
   }
 
+
   DropDownBuilder() {
-    const dropDownclassName = this.state.isDropDownOpen ? 'song-drop-down show' : 'song-drop-down';
+    const dropDownClassName = this.state.isDropDownOpen ? 'song-drop-down show' : 'song-drop-down';
     return (
-      <div className={dropDownclassName}>
+      <div className={dropDownClassName}>
         {this.DropDownModeHandler()}
-        {this.CreateAddListElm()}
+        {this.CreateAddListWithSongBtn()}
         {this.CheckBoxBuilder()}
       </div>
     )
   }
 
 
-  handler() {
-    this.setState({isDropDownOpen: false})
-  }
+
 
   updateSongInPlayerHandler(data) {
 
@@ -188,16 +179,17 @@ class SongsCreator extends React.Component {
     // heart Handler
     if ((prevState.isDropDownOpen === false) && (this.state.isDropDownOpen === true)) {
       this.setState({
-        class: "fa fa-heart heart-font"
+        heartClassName: "fa fa-heart heart-font"
       });
     }
     if ((prevState.isDropDownOpen === true) && (this.state.isDropDownOpen === false)) {
       this.setState({
-        class: "fa fa-heart-o heart-font"
+        heartClassName: "fa fa-heart-o heart-font"
       });
 
-      this.heartHandler()
+      this.heartViewHandler()
     }
+
 
   }
 
@@ -213,7 +205,8 @@ class SongsCreator extends React.Component {
 
 
     return (
-      <div className="songs-creator" ref={(song) => this.song = song}>
+
+      <div className="songs-creator">
 
         <div className="img-song" style={{
           backgroundImage: `url(${songImage})`
@@ -223,16 +216,11 @@ class SongsCreator extends React.Component {
           </div>
         </div>
 
-
         <span className="song-title">{songTitle + '...'}</span>
         <span className="clock"></span>
         <span className="song-duration">{songDuration}</span>
-
-        <i className={this.state.class} onClick={() => this.heartClicker()}
-           />
-
+        <i className={this.state.heartClassName} onClick={() => this.heartClicker()}/>
         {this.DropDownBuilder()}
-
       </div>
     )
   }
@@ -252,7 +240,7 @@ function mapDispatchToProps(dispatch) {
       dispatch({type: 'ADDED-NEW-LIST', addedNewList: true});
       dispatch({type: 'ADD-NEW-PLAYLIST', song: song, element: this.Elm})
     },
-    checkHandlerToStore(isItChecked, song, indexOfList) {
+    addRemoveSongFromListStoreUpdate(isItChecked, song, indexOfList) {
       dispatch({type: 'UPDATE-SONGS-IN-PLAYLIST', isItChecked: isItChecked, song: song, indexOfList: indexOfList})
     },
     updatePlayerModeInStore(mode){

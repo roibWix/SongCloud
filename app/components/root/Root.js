@@ -16,17 +16,16 @@ class Root extends React.Component {
   constructor() {
     super();
   }
+
   componentDidMount() {
     this.getPlaylistsFromServerXhr();
   }
 
   componentDidUpdate() {
-
     if (this.props.currentTrack.id !== undefined) {
       this.main.classList.add('main-with-player')
     }
   }
-
 
   getPlaylistsFromServerXhr() {
     let xhr = new XMLHttpRequest();
@@ -35,7 +34,7 @@ class Root extends React.Component {
       const playList = JSON.parse(xhr.responseText);
       this.props.updateLocalStorePlaylistsFromServer(playList);
     });
-    xhr.addEventListener( 'error', () => {
+    xhr.addEventListener('error', () => {
       console.info('error');
     });
     xhr.send()

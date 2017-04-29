@@ -1,9 +1,7 @@
 import './explore.scss';
-
 import React from 'react';
 import SongCreator from '../songcreator/SongCreator'
 import {NavLink} from 'react-router-dom';
-// import {setSong} from '../root/Root'
 
 
 export default class Explore extends React.Component {
@@ -19,6 +17,8 @@ export default class Explore extends React.Component {
 
   componentDidMount() {
     this.getSongsXhr();
+
+
   }
 
   getSongsXhr() {
@@ -51,7 +51,7 @@ export default class Explore extends React.Component {
       return <div className="no-songs-were-found-container"><h2 className="no-songs-were-found-msg">No songs were found
         for your search</h2></div>
     }
-    return <ul className="songs-container">
+    return <ul className="songs-container" ref={(elm) => this.songsContainer = elm}>
       {this.SongsBuilder()}
     </ul>
 

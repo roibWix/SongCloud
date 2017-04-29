@@ -20,7 +20,7 @@ export default class Topbar extends React.Component {
     // input element value
     const searchValue = this.search.value;
     if (searchValue.length > 0) {
-      this.props.history.push(`${searchValue}?search=true`);
+      this.props.history.push(`/explore/${searchValue}?search=true`);
     }
   }
 
@@ -52,7 +52,7 @@ export default class Topbar extends React.Component {
                        type="search"
                        placeholder="SEARCH"/>
 
-                <Link to="/Signin" className="logout topnavli">Log out</Link>
+
               </form>
             </div>
           </ul>
@@ -63,3 +63,8 @@ export default class Topbar extends React.Component {
   }
 }
 
+
+
+
+// not Done
+//   <Link to="/Signin" className="logout topnavli">Log out</Link>

@@ -58,14 +58,7 @@ export default function playListsReducer(playlists = [], action) {
       let playlist = {
         listid: newuuid,
         listTitle: 'Untitled',
-        songs: [{
-          id: 250711755,
-          title: "The Chainsmokers - Don't Let Me Down (Illenium Remix)",
-          duration: 219082,
-          stream_url: "https://api.soundcloud.com/tracks/250711755/stream",
-          uri: "https://api.soundcloud.com/tracks/250711755",
-          artwork_url: "https://i1.sndcdn.com/artworks-000150027827-4exjil-large.jpg"
-        }]
+        songs: []
       };
 
       if (action.song) {

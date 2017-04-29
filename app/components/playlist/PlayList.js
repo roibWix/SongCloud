@@ -51,6 +51,8 @@ class PlayListsCom extends React.Component {
     if (this.state.value.length === 0) {
       newTitleName = 'Untitled';
     }
+    this.props.SubmitHandlerToStore(indexOfList, newTitleName);
+
     this.SubmitXHRToServer(indexOfList, newTitleName);
     this.setState({mode: 'title'});
   }
@@ -59,9 +61,7 @@ class PlayListsCom extends React.Component {
     const xhr = new XMLHttpRequest();
     xhr.open('post', `${serverLocation}/ChangeTitleName`);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.addEventListener("load", () =>
-      this.props.SubmitHandlerToStore(indexOfList, newTitleValue)
-    );
+    xhr.addEventListener("load", () => {}   );
     xhr.addEventListener("error", () => {console.info('error')});
 
     let data = {
