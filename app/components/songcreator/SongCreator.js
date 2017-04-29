@@ -189,7 +189,7 @@ class SongsCreator extends React.Component {
 
       this.heartViewHandler()
     }
-
+    this.heartViewHandler();
 
   }
 
